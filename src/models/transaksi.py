@@ -13,6 +13,9 @@ class TransaksiItem:
     """Data model untuk item dalam transaksi."""
     kode: str
     nama: str
+    ukuran: str  # Mini/Standar/Besar
+    warna_kertas: str
+    warna_bunga: str
     qty: int
     harga: float
     subtotal: float
@@ -22,11 +25,18 @@ class TransaksiItem:
         return asdict(self)
 
     @classmethod
-    def from_cart(cls, kode: str, nama: str, qty: int, harga: float) -> "TransaksiItem":
+    def from_cart(
+        cls, kode: str, nama: str, ukuran: str, 
+        warna_kertas: str, warna_bunga: str,
+        qty: int, harga: float
+    ) -> "TransaksiItem":
         """Create TransaksiItem dari data keranjang."""
         return cls(
             kode=kode,
             nama=nama,
+            ukuran=ukuran,
+            warna_kertas=warna_kertas,
+            warna_bunga=warna_bunga,
             qty=qty,
             harga=harga,
             subtotal=qty * harga
@@ -46,10 +56,16 @@ def init_transaksi_file() -> None:
 
 def generate_transaksi_id() -> str:
     """Generate ID transaksi unik berdasarkan waktu."""
-    return datetime.now().strftime("TRX%Y%m%d%H%M%S")
+    return datetime.now().strftime("LIY%Y%m%d%H%M%S")
 
 
-def save_transaksi(items: list[TransaksiItem], total_transaksi: float) -> str:
+def save_transaksi(
+    items: list[TransaksiItem], 
+    diskon: float,
+    ongkir: float,
+    delivery: str,
+    total_transaksi: float
+) -> str:
     """Simpan transaksi ke CSV. Return transaction ID."""
     init_transaksi_file()
     trx_id = generate_transaksi_id()
@@ -60,9 +76,10 @@ def save_transaksi(items: list[TransaksiItem], total_transaksi: float) -> str:
         for item in items:
             writer.writerow([
                 waktu, trx_id,
-                item.kode, item.nama,
-                item.qty, item.harga,
-                item.subtotal, total_transaksi
+                item.kode, item.nama, item.ukuran,
+                item.warna_kertas, item.warna_bunga,
+                item.qty, item.harga, item.subtotal,
+                diskon, ongkir, delivery, total_transaksi
             ])
     return trx_id
 

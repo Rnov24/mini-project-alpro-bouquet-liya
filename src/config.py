@@ -5,14 +5,15 @@ import os
 
 # Data directory paths
 DATA_DIR = "data"
-BARANG_FILE = os.path.join(DATA_DIR, "barang.json")
+BARANG_FILE = os.path.join(DATA_DIR, "katalog buqet.json")
 TRANSAKSI_FILE = os.path.join(DATA_DIR, "transaksi.csv")
 
 # CSV headers untuk transaksi
 TRANSAKSI_HEADERS = [
-    "waktu", "id_transaksi", "kode", "nama",
-    "qty", "harga", "subtotal", "total_transaksi"
+    "waktu", "id_transaksi", "kode", "nama", "ukuran",
+    "warna_kertas", "warna_bunga", "qty", "harga", "subtotal",
+    "diskon", "ongkir", "delivery", "total_transaksi"
 ]
 
 # App info
-APP_NAME = "SISTEM KASIR UMKM IKMI CIREBON"
+APP_NAME = "SISTEM KASIR BUQEUET LIYA"

@@ -14,10 +14,10 @@ from src.services.transaksi_service import (
 
 MENU_OPTIONS = """
 === {app_name} ===
-1) Tampilkan barang
-2) Tambah barang
-3) Update barang
-4) Cari barang
+1) Tampilkan Katalog Buqet
+2) Tambah Katalog Buqet
+3) Update Katalog
+4) Cari Buqet
 5) Transaksi penjualan
 6) Riwayat transaksi
 7) Rekap pendapatan
@@ -51,7 +51,7 @@ def main_menu() -> None:
             case "7":
                 tampil_rekap()
             case "0":
-                print("Sampai jumpa!")
+                print("Sampai jumpa Semoga Sukses Selalu!")
                 break
             case _:
                 print("[!] Menu tidak valid.\n")

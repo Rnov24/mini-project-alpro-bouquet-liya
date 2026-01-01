@@ -1,0 +1,70 @@
+[
+  {
+    "kode": "1",
+    "nama": "Buqet Bunga",
+    "warna_kertas": [],
+    "warna_bunga": [],
+    "ukuran": [
+      {
+        "nama": "Standar",
+        "harga": 12000.0,
+        "hpp": 6000.0,
+        "stok": 9715
+      }
+    ]
+  },
+  {
+    "kode": "2",
+    "nama": "buwet wisuda",
+    "warna_kertas": [],
+    "warna_bunga": [],
+    "ukuran": [
+      {
+        "nama": "Standar",
+        "harga": 20000.0,
+        "hpp": 12000.0,
+        "stok": 0
+      }
+    ]
+  },
+  {
+    "kode": "BQ01",
+    "nama": "buqet boneka",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "hitam",
+      "ungu",
+      "pink",
+      "oren",
+      "biru",
+      "abu-abu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 57000.0,
+        "hpp": 50000.0,
+        "stok": 17
+      },
+      {
+        "nama": "Standar",
+        "harga": 76000.0,
+        "hpp": 64000.0,
+        "stok": 10
+      },
+      {
+        "nama": "Besar",
+        "harga": 95000.0,
+        "hpp": 80000.0,
+        "stok": 10
+      }
+    ]
+  }
+]
