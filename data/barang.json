@@ -1,0 +1,14 @@
+[
+  {
+    "kode": "1",
+    "nama": "makanan",
+    "harga": 200000.0,
+    "stok": 1
+  },
+  {
+    "kode": "2",
+    "nama": "bata",
+    "harga": 20000.0,
+    "stok": 2990
+  }
+]
