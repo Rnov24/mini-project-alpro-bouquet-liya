@@ -1,9 +1,0 @@
-waktu,id_transaksi,kode,nama,ukuran,warna_kertas,warna_bunga,qty,harga,subtotal,diskon,ongkir,delivery,total_transaksi
-2026-01-02 15:14:33,LIY20260102151433,1,Buqet Bunga,Standar,-,-,2,12000.0,24000.0,1200.0,30000.0,Full Delivery,52800.0
-2026-01-02 15:22:40,LIY20260102152240,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,0.0,0.0,Ambil Sendiri,36000.0
-2026-01-02 15:22:40,LIY20260102152240,1,Buqet Bunga,Standar,-,-,2,12000.0,24000.0,0.0,0.0,Ambil Sendiri,36000.0
-2026-01-02 15:25:05,LIY20260102152505,4,buqet uang,Standar,coksu,merah,2,40000.0,80000.0,4800.0,2000.0,Full Delivery,77200.0
-2026-01-02 15:47:56,LIY20260102154756,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,6000.0,6000.0,0.0,10000.0,Full Delivery,22000.0
-2026-01-02 16:13:48,LIY20260102161348,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,6000.0,6000.0,6000.0,480.0,0.0,Ambil Sendiri,23520.0
-2026-01-02 16:13:48,LIY20260102161348,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,6000.0,6000.0,6000.0,480.0,0.0,Ambil Sendiri,23520.0
-2026-01-02 16:19:10,LIY20260102161910,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,6000.0,6000.0,6000.0,0.0,30000.0,Full Delivery,42000.0
