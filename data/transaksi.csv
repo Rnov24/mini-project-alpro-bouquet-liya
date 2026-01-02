@@ -1,0 +1,3 @@
+waktu,id_transaksi,kode,nama,ukuran,warna_kertas,warna_bunga,qty,harga,subtotal,hpp,total_hpp,profit,diskon,ongkir,delivery,total_transaksi
+2026-01-02 16:20:31,LIY20260102162031,1,Buqet Bunga,Standar,-,-,1,12000.0,12000.0,6000.0,6000.0,6000.0,12000.0,300000.0,Full Delivery,300000.0
+2026-01-02 16:23:17,LIY20260102162317,5,buqet kawat bulu,Standar,unggu,biru,2,45000.0,90000.0,20000.0,40000.0,50000.0,2700.0,4000.0,Full Delivery,91300.0

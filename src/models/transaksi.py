@@ -8,29 +8,43 @@ from src.config import TRANSAKSI_FILE, TRANSAKSI_HEADERS
 from src.utils import ensure_data_dir
 
 
+# =========================
+# DATA MODEL
+# =========================
 @dataclass
 class TransaksiItem:
     """Data model untuk item dalam transaksi."""
     kode: str
     nama: str
-    ukuran: str  # Mini/Standar/Besar
+    ukuran: str
     warna_kertas: str
     warna_bunga: str
     qty: int
     harga: float
     subtotal: float
+    hpp: float              # modal per item (internal)
+    total_hpp: float        # qty * hpp (internal)
+    profit: float           # subtotal - total_hpp
 
     def to_dict(self) -> dict:
-        """Convert ke dictionary."""
         return asdict(self)
 
     @classmethod
     def from_cart(
-        cls, kode: str, nama: str, ukuran: str, 
-        warna_kertas: str, warna_bunga: str,
-        qty: int, harga: float
+        cls,
+        kode: str,
+        nama: str,
+        ukuran: str,
+        warna_kertas: str,
+        warna_bunga: str,
+        qty: int,
+        harga: float,
+        hpp: float
     ) -> "TransaksiItem":
-        """Create TransaksiItem dari data keranjang."""
+        subtotal = qty * harga
+        total_hpp = qty * hpp
+        profit = subtotal - total_hpp
+
         return cls(
             kode=kode,
             nama=nama,
@@ -39,10 +53,16 @@ class TransaksiItem:
             warna_bunga=warna_bunga,
             qty=qty,
             harga=harga,
-            subtotal=qty * harga
+            subtotal=subtotal,
+            hpp=hpp,
+            total_hpp=total_hpp,
+            profit=profit
         )
 
 
+# =========================
+# FILE HANDLING
+# =========================
 def init_transaksi_file() -> None:
     """Inisialisasi file transaksi jika belum ada."""
     ensure_data_dir()
@@ -55,58 +75,92 @@ def init_transaksi_file() -> None:
 
 
 def generate_transaksi_id() -> str:
-    """Generate ID transaksi unik berdasarkan waktu."""
+    """Generate ID transaksi unik."""
     return datetime.now().strftime("LIY%Y%m%d%H%M%S")
 
 
 def save_transaksi(
-    items: list[TransaksiItem], 
+    items: list[TransaksiItem],
     diskon: float,
     ongkir: float,
     delivery: str,
     total_transaksi: float
 ) -> str:
-    """Simpan transaksi ke CSV. Return transaction ID."""
+    """Simpan transaksi ke CSV (HPP & profit hanya untuk internal)."""
     init_transaksi_file()
     trx_id = generate_transaksi_id()
     waktu = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
     with open(TRANSAKSI_FILE, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         for item in items:
             writer.writerow([
-                waktu, trx_id,
-                item.kode, item.nama, item.ukuran,
-                item.warna_kertas, item.warna_bunga,
-                item.qty, item.harga, item.subtotal,
-                diskon, ongkir, delivery, total_transaksi
+                waktu,
+                trx_id,
+                item.kode,
+                item.nama,
+                item.ukuran,
+                item.warna_kertas,
+                item.warna_bunga,
+                item.qty,
+                item.harga,
+                item.subtotal,
+                item.hpp,
+                item.total_hpp,
+                item.profit,
+                diskon,
+                ongkir,
+                delivery,
+                total_transaksi
             ])
+
     return trx_id
 
 
 def load_transaksi(limit: int = 20) -> list[dict]:
-    """Load transaksi terakhir dari CSV."""
+    """Load transaksi terakhir."""
     init_transaksi_file()
-    rows = []
+    with open(TRANSAKSI_FILE, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+    return rows[-limit:]
+
+
+# =========================
+# REKAP & AKUNTANSI
+# =========================
+def get_rekap_pendapatan():
+    """
+    Return:
+    - jumlah_transaksi
+    - total_pendapatan (berdasarkan total_transaksi per invoice)
+    - total_modal (HPP)
+    - total_profit
+    """
+    init_transaksi_file()
+
+    transaksi_set = set()
+    total_pendapatan = 0.0
+    total_modal = 0.0
+    total_profit = 0.0
+
     with open(TRANSAKSI_FILE, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            rows.append(row)
-    return rows[-limit:] if rows else []
+            trx_id = row.get("id_transaksi")
 
+            # Hitung pendapatan per transaksi (tidak dobel)
+            if trx_id and trx_id not in transaksi_set:
+                transaksi_set.add(trx_id)
+                total_pendapatan += float(row.get("total_transaksi", 0))
 
-def get_rekap_pendapatan() -> tuple[int, float]:
-    """Hitung rekap pendapatan. Return (jumlah_transaksi, total_pendapatan)."""
-    init_transaksi_file()
-    totals_by_trx: dict[str, float] = {}
-    
-    with open(TRANSAKSI_FILE, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            trx_id = row["id_transaksi"]
-            totals_by_trx[trx_id] = float(row["total_transaksi"])
-    
-    if not totals_by_trx:
-        return 0, 0.0
-    
-    return len(totals_by_trx), sum(totals_by_trx.values())
+            # Aman untuk CSV lama & baru
+            total_modal += float(row.get("total_hpp", 0))
+            total_profit += float(row.get("profit", 0))
+
+    return (
+        len(transaksi_set),
+        total_pendapatan,
+        total_modal,
+        total_profit
+    )

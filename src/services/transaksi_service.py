@@ -318,7 +318,7 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
         item = TransaksiItem.from_cart(
             barang.kode, barang.nama, ukuran.nama,
             warna_kertas_dipilih, warna_bunga_dipilih,
-            qty, ukuran.harga
+            qty, ukuran.harga, ukuran.hpp
         )
         keranjang.append(item)
         ukuran.stok -= qty
@@ -397,12 +397,15 @@ def tampil_riwayat(limit: int = 20) -> None:
 
 def tampil_rekap() -> None:
     """Tampilkan rekap total pendapatan."""
-    jumlah_trx, total_pendapatan = get_rekap_pendapatan()
+    jumlah_trx, total_pendapatan, total_modal, total_profit = get_rekap_pendapatan()
     
     if jumlah_trx == 0:
         print("\n[!] Belum ada transaksi.\n")
         return
     
-    print("\n=== REKAP ===")
-    print(f"Jumlah transaksi : {jumlah_trx}")
-    print(f"Total pendapatan : Rp{format_rupiah(total_pendapatan)}\n")
+    print("===== REKAP TRANSAKSI =====")
+    print(f"Jumlah Transaksi : {jumlah_trx}")
+    print(f"Total Pendapatan : Rp {total_pendapatan:,.0f}")
+    print(f"Total Modal (HPP): Rp {total_modal:,.0f}")
+    print(f"Keuntungan       : Rp {total_profit:,.0f}")
+    print("===========================\n")

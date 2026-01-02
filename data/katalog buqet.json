@@ -9,7 +9,7 @@
         "nama": "Standar",
         "harga": 12000.0,
         "hpp": 6000.0,
-        "stok": 9715
+        "stok": 9705
       }
     ]
   },
@@ -63,6 +63,72 @@
         "nama": "Besar",
         "harga": 95000.0,
         "hpp": 80000.0,
+        "stok": 10
+      }
+    ]
+  },
+  {
+    "kode": "4",
+    "nama": "buqet uang",
+    "warna_kertas": [
+      "hitam",
+      "coksu"
+    ],
+    "warna_bunga": [
+      "merah",
+      "biru"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 25.0,
+        "hpp": 2.0,
+        "stok": 25
+      },
+      {
+        "nama": "Standar",
+        "harga": 40000.0,
+        "hpp": 5000.0,
+        "stok": 77
+      },
+      {
+        "nama": "Besar",
+        "harga": 70000.0,
+        "hpp": 25000.0,
+        "stok": 9
+      }
+    ]
+  },
+  {
+    "kode": "5",
+    "nama": "buqet kawat bulu",
+    "warna_kertas": [
+      "biru",
+      "hitam",
+      "unggu"
+    ],
+    "warna_bunga": [
+      "merah",
+      "biru",
+      "oren"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 25000.0,
+        "hpp": 15000.0,
+        "stok": 20
+      },
+      {
+        "nama": "Standar",
+        "harga": 45000.0,
+        "hpp": 20000.0,
+        "stok": 22
+      },
+      {
+        "nama": "Besar",
+        "harga": 60000.0,
+        "hpp": 35000.0,
         "stok": 10
       }
     ]
