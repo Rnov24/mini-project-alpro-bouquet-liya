@@ -132,5 +132,43 @@
         "stok": 10
       }
     ]
+  },
+  {
+    "kode": "BQ02",
+    "nama": "Buqet Bunga Palsu",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "bunga merah",
+      "bunga biru",
+      "bunga pink",
+      "bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 20000.0,
+        "hpp": 17000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 55000.0,
+        "hpp": 45000.0,
+        "stok": 20
+      },
+      {
+        "nama": "Besar",
+        "harga": 90000.0,
+        "hpp": 85000.0,
+        "stok": 50
+      }
+    ]
   }
 ]
