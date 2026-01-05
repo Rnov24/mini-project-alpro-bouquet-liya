@@ -1,0 +1,204 @@
+PSEUDOCODE: PROSES TRANSAKSI PENJUALAN
+======================================
+
+FUNCTION proses_transaksi(daftar_barang)
+    
+    IF daftar_barang IS EMPTY THEN
+        PRINT "Data barang kosong"
+        RETURN FALSE
+    END IF
+    
+    PRINT "TRANSAKSI PENJUALAN BUQET"
+    PRINT "Ketik SELESAI untuk mengakhiri"
+    
+    SET keranjang = []
+    
+    // LOOP INPUT BARANG
+    WHILE TRUE DO
+        INPUT kode FROM user
+        
+        IF kode IS EMPTY THEN
+            PRINT "Kode tidak boleh kosong"
+            CONTINUE
+        END IF
+        
+        IF UPPERCASE(kode) == "SELESAI" THEN
+            BREAK
+        END IF
+        
+        SET barang = cari_by_kode(daftar_barang, UPPERCASE(kode))
+        
+        IF barang IS NULL THEN
+            PRINT "Kode tidak ditemukan"
+            CONTINUE
+        END IF
+        
+        PRINT "Barang:", barang.nama
+        
+        // Pilih warna kertas
+        SET warna_kertas_dipilih = "-"
+        IF barang.warna_kertas NOT EMPTY THEN
+            PRINT "Pilih warna kertas:"
+            SET nomor = 1
+            FOR EACH warna IN barang.warna_kertas DO
+                PRINT nomor, warna
+                SET nomor = nomor + 1
+            END FOR
+            INPUT pilih_wk FROM user
+            SET warna_kertas_dipilih = barang.warna_kertas[pilih_wk - 1]
+        END IF
+        
+        // Pilih warna bunga
+        SET warna_bunga_dipilih = "-"
+        IF barang.warna_bunga NOT EMPTY THEN
+            PRINT "Pilih warna bunga:"
+            SET nomor = 1
+            FOR EACH warna IN barang.warna_bunga DO
+                PRINT nomor, warna
+                SET nomor = nomor + 1
+            END FOR
+            INPUT pilih_wb FROM user
+            SET warna_bunga_dipilih = barang.warna_bunga[pilih_wb - 1]
+        END IF
+        
+        // Pilih ukuran
+        PRINT "Pilih ukuran:"
+        SET nomor = 1
+        FOR EACH ukuran IN barang.daftar_ukuran DO
+            PRINT nomor, ukuran.nama, ukuran.harga, "Stok:", ukuran.stok
+            SET nomor = nomor + 1
+        END FOR
+        
+        INPUT pilih_ukuran FROM user
+        SET ukuran = barang.daftar_ukuran[pilih_ukuran - 1]
+        
+        IF ukuran.stok == 0 THEN
+            PRINT "Stok habis"
+            CONTINUE
+        END IF
+        
+        // Input jumlah
+        INPUT qty FROM user
+        
+        IF qty > ukuran.stok THEN
+            PRINT "Qty melebihi stok"
+            CONTINUE
+        END IF
+        
+        // Buat item transaksi
+        SET subtotal = qty * ukuran.harga
+        SET item = CREATE TransaksiItem(
+            barang.kode, barang.nama, ukuran.nama,
+            warna_kertas_dipilih, warna_bunga_dipilih,
+            qty, ukuran.harga, subtotal
+        )
+        
+        APPEND item TO keranjang
+        SET ukuran.stok = ukuran.stok - qty
+        PRINT "Ditambahkan ke keranjang"
+    END WHILE
+    
+    // Cek keranjang kosong
+    IF keranjang IS EMPTY THEN
+        PRINT "Tidak ada item, transaksi dibatalkan"
+        RETURN FALSE
+    END IF
+    
+    // Hitung total
+    SET total = 0
+    FOR EACH item IN keranjang DO
+        SET total = total + item.subtotal
+    END FOR
+    
+    // Hitung diskon
+    SET diskon = hitung_diskon(total)
+    
+    // Info pembeli
+    INPUT nama_pembeli FROM user
+    INPUT tanggal_pengambilan FROM user
+    
+    // Pilih pengantaran
+    SET (ongkir, tipe_delivery) = pilih_pengantaran()
+    
+    // Hitung total bayar
+    SET total_bayar = total - diskon + ongkir
+    
+    // Tampilkan struk
+    CALL tampil_struk(keranjang, total, diskon, ongkir, total_bayar)
+    
+    // Proses pembayaran
+    INPUT uang_bayar FROM user
+    
+    IF uang_bayar < total_bayar THEN
+        PRINT "Uang kurang, transaksi dibatalkan"
+        CALL kembalikan_stok(daftar_barang, keranjang)
+        RETURN FALSE
+    END IF
+    
+    SET kembalian = uang_bayar - total_bayar
+    PRINT "Kembalian:", kembalian
+    
+    // Simpan transaksi
+    SET id_transaksi = simpan_transaksi(keranjang, diskon, ongkir, tipe_delivery, total_bayar)
+    CALL simpan_barang(daftar_barang)
+    
+    PRINT "Transaksi berhasil disimpan"
+    RETURN TRUE
+
+END FUNCTION
+
+
+FUNCTION hitung_diskon(total)
+    
+    INPUT pakai_diskon FROM user  // y atau n
+    
+    IF pakai_diskon != "y" THEN
+        RETURN 0
+    END IF
+    
+    INPUT persen_diskon FROM user
+    
+    IF persen_diskon > 100 THEN
+        SET persen_diskon = 100
+    END IF
+    
+    SET nilai_diskon = total * (persen_diskon / 100)
+    RETURN nilai_diskon
+
+END FUNCTION
+
+
+FUNCTION pilih_pengantaran()
+    
+    PRINT "Pilih pengantaran:"
+    PRINT "1. Full Delivery (ada ongkir)"
+    PRINT "2. Ambil Sendiri (gratis)"
+    
+    INPUT pilihan FROM user
+    
+    IF pilihan == 1 THEN
+        INPUT ongkir FROM user
+        RETURN (ongkir, "Full Delivery")
+    ELSE
+        RETURN (0, "Ambil Sendiri")
+    END IF
+
+END FUNCTION
+
+
+FUNCTION kembalikan_stok(daftar_barang, keranjang)
+    
+    FOR EACH item IN keranjang DO
+        SET barang = cari_by_kode(daftar_barang, item.kode)
+        
+        IF barang IS NOT NULL THEN
+            SET ukuran = barang.get_ukuran(item.ukuran)
+            IF ukuran IS NOT NULL THEN
+                SET ukuran.stok = ukuran.stok + item.qty
+            END IF
+        END IF
+    END FOR
+    
+    CALL simpan_barang(daftar_barang)
+
+END FUNCTION

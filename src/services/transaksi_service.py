@@ -9,7 +9,10 @@ from src.models.barang import Barang, save_barang, find_by_kode
 from src.models.transaksi import (
     TransaksiItem, save_transaksi, load_transaksi, get_rekap_pendapatan
 )
-from src.utils import input_non_empty, input_int, input_float, format_rupiah
+from src.utils import (
+    input_non_empty, input_int, input_float, format_rupiah,
+    Colors, print_success, print_error, print_warning, print_info
+)
 
 # Optional Pillow import for image export
 try:
@@ -27,21 +30,30 @@ def tampil_struk(
     total_bayar: float
 ) -> None:
     """Tampilkan struk transaksi."""
-    print("\n===== STRUK =====")
-    print(f"{'Nama':<18} {'Ukuran':<8} {'Warna':<15} {'Qty':>3} {'Sub':>12}")
-    print("-" * 65)
+    c = Colors
+    
+    print(f"\n{c.BOLD_CYAN}╔══════════════════════════════════════════════════════════════════╗{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}                    {c.BOLD_MAGENTA}🧾 STRUK TRANSAKSI 🧾{c.RESET}                       {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}╠══════════════════════════════════════════════════════════════════╣{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET} {c.BOLD_WHITE}{'Nama':<18} {'Ukuran':<8} {'Warna':<15} {'Qty':>4} {'Subtotal':>12}{c.RESET}  {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}╟──────────────────────────────────────────────────────────────────╢{c.RESET}")
+    
     for item in keranjang:
-        warna_info = f"{item.warna_kertas}/{item.warna_bunga}" if item.warna_kertas != "-" else "-"
-        print(
-            f"{item.nama[:17]:<18} {item.ukuran:<8} {warna_info[:14]:<15} {item.qty:>3} "
-            f"{format_rupiah(item.subtotal):>12}"
-        )
-    print("-" * 65)
-    print(f"{'Total':<40} Rp{format_rupiah(total):>12}")
-    print(f"{'Diskon':<40} Rp{format_rupiah(diskon):>12}")
-    print(f"{'Ongkir':<40} Rp{format_rupiah(ongkir):>12}")
-    print(f"{'Total Bayar':<40} Rp{format_rupiah(total_bayar):>12}")
-    print("=================\n")
+        warna_info = f"{item.warna_kertas[:6]}/{item.warna_bunga[:6]}" if item.warna_kertas != "-" else "-"
+        print(f"{c.BOLD_CYAN}║{c.RESET} {c.CYAN}{item.nama[:17]:<18}{c.RESET} {item.ukuran:<8} {warna_info[:14]:<15} {item.qty:>4} {c.BOLD_WHITE}Rp{format_rupiah(item.subtotal):>10}{c.RESET} {c.BOLD_CYAN}║{c.RESET}")
+    
+    print(f"{c.BOLD_CYAN}╠══════════════════════════════════════════════════════════════════╣{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET} {c.WHITE}{'Subtotal':<50}{c.RESET} {c.WHITE}Rp{format_rupiah(total):>10}{c.RESET} {c.BOLD_CYAN}║{c.RESET}")
+    
+    if diskon > 0:
+        print(f"{c.BOLD_CYAN}║{c.RESET} {c.GREEN}{'Diskon':<50}{c.RESET} {c.BOLD_GREEN}-Rp{format_rupiah(diskon):>9}{c.RESET} {c.BOLD_CYAN}║{c.RESET}")
+    
+    if ongkir > 0:
+        print(f"{c.BOLD_CYAN}║{c.RESET} {c.YELLOW}{'Ongkir':<50}{c.RESET} {c.WHITE}Rp{format_rupiah(ongkir):>10}{c.RESET} {c.BOLD_CYAN}║{c.RESET}")
+    
+    print(f"{c.BOLD_CYAN}╟──────────────────────────────────────────────────────────────────╢{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET} {c.BOLD_WHITE}{'TOTAL BAYAR':<50}{c.RESET} {c.BOLD_YELLOW}Rp{format_rupiah(total_bayar):>10}{c.RESET} {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}╚══════════════════════════════════════════════════════════════════╝{c.RESET}\n")
 
 
 def rollback_stok(barang_list: list[Barang], keranjang: list[TransaksiItem]) -> None:
@@ -57,29 +69,40 @@ def rollback_stok(barang_list: list[Barang], keranjang: list[TransaksiItem]) -> 
 
 def hitung_diskon(total: float) -> float:
     """Tanya dan hitung diskon. Return nilai diskon."""
-    pakai_diskon = input("Pakai diskon? (y/n): ").strip().lower()
+    c = Colors
+    print(f"\n{c.BOLD_YELLOW}┌─── 💳 Diskon ───────────────────────────────────┐{c.RESET}")
+    pakai_diskon = input(f"{c.CYAN}│ Pakai diskon? (y/n): {c.RESET}").strip().lower()
+    
     if pakai_diskon != "y":
+        print(f"{c.BOLD_YELLOW}└─────────────────────────────────────────────────┘{c.RESET}")
         return 0.0
     
-    persen = input_float("Diskon persen (0-100): ", min_val=0)
+    persen = input_float(f"{c.CYAN}│ Diskon persen (0-100): {c.RESET}", min_val=0)
     if persen > 100:
         persen = 100
     
-    return total * (persen / 100)
+    diskon = total * (persen / 100)
+    print(f"{c.GREEN}│ ✓ Diskon {persen}% = Rp{format_rupiah(diskon)}{c.RESET}")
+    print(f"{c.BOLD_YELLOW}└─────────────────────────────────────────────────┘{c.RESET}")
+    return diskon
 
 
 def pilih_pengantaran() -> tuple[float, str]:
     """Pilih metode pengantaran. Return (ongkir, delivery_type)."""
-    print("Alur pengantaran:")
-    print("1) Full Delivery (Ada ongkir)")
-    print("2) Ambil Sendiri (Gratis ongkir)")
-    pilihan = input_int("Pilih pengantaran: ", min_val=1, max_val=2)
+    c = Colors
+    print(f"\n{c.BOLD_YELLOW}┌─── 🚚 Pengantaran ──────────────────────────────┐{c.RESET}")
+    print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}[1]{c.RESET} 🚐 Full Delivery (Ada ongkir)")
+    print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}[2]{c.RESET} 🏠 Ambil Sendiri (Gratis ongkir)")
+    print(f"{c.BOLD_YELLOW}└─────────────────────────────────────────────────┘{c.RESET}")
+    
+    pilihan = input_int(f"{c.GREEN}▸ Pilih pengantaran (1/2): {c.RESET}", min_val=1, max_val=2)
     
     if pilihan == 1:
-        ongkir = input_float("Ongkir (angka): ", min_val=0)
+        ongkir = input_float(f"{c.CYAN}  Ongkir: Rp{c.RESET}", min_val=0)
+        print_info(f"Delivery: Full Delivery, Ongkir: Rp{format_rupiah(ongkir)}")
         return (ongkir, "Full Delivery")
     else:
-        print("Ongkir gratis untuk pengantaran.")
+        print_success("Ongkir gratis untuk pengambilan sendiri!")
         return (0.0, "Ambil Sendiri")
 
 
@@ -255,63 +278,68 @@ def export_struk_as_image(
 
 def proses_transaksi(barang_list: list[Barang]) -> bool:
     """Proses transaksi penjualan. Return True jika berhasil."""
+    c = Colors
+    
     if not barang_list:
-        print("\n[!] Data barang kosong. Tambahkan barang dulu.\n")
+        print_warning("Data barang kosong. Tambahkan barang dulu.")
         return False
     
-    print("\n=== TRANSAKSI PENJUALAN BUQET ===")
-    print("Ketik 'SELESAI' untuk mengakhiri input barang.\n")
+    print(f"\n{c.BOLD_CYAN}╔════════════════════════════════════════════════╗{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}        {c.BOLD_MAGENTA}🛒 TRANSAKSI PENJUALAN BUQET 🛒{c.RESET}          {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}╚════════════════════════════════════════════════╝{c.RESET}")
+    print(f"{c.DIM}Ketik 'SELESAI' untuk mengakhiri input barang.{c.RESET}\n")
     
     keranjang: list[TransaksiItem] = []
     
     while True:
-        kode = input("Kode barang: ").strip()
+        kode = input(f"{c.GREEN}▸ Kode barang: {c.RESET}").strip()
         if not kode:
-            print("Kode tidak boleh kosong.")
+            print_error("Kode tidak boleh kosong.")
             continue
         if kode.upper() == "SELESAI":
             break
         
         barang = find_by_kode(barang_list, kode.upper())
         if barang is None:
-            print("[!] Kode tidak ditemukan.")
+            print_error("Kode tidak ditemukan.")
             continue
         
-        print(f"\n-> {barang.nama}")
+        print(f"\n{c.BOLD_GREEN}✓{c.RESET} {c.BOLD_CYAN}{barang.nama}{c.RESET}")
         
         # Pilih warna kertas
         warna_kertas_dipilih = "-"
         if barang.warna_kertas:
-            print("   Pilih Warna Kertas:")
+            print(f"  {c.BOLD_YELLOW}🎨 Pilih Warna Kertas:{c.RESET}")
             for i, w in enumerate(barang.warna_kertas, start=1):
-                print(f"   {i}) {w}")
-            pilih_wk = input_int("   Pilih warna kertas (nomor): ", min_val=1, max_val=len(barang.warna_kertas))
+                print(f"    {c.CYAN}[{i}]{c.RESET} {w}")
+            pilih_wk = input_int(f"  {c.GREEN}▸ Pilih (1-{len(barang.warna_kertas)}): {c.RESET}", min_val=1, max_val=len(barang.warna_kertas))
             warna_kertas_dipilih = barang.warna_kertas[pilih_wk - 1]
         
         # Pilih warna bunga
         warna_bunga_dipilih = "-"
         if barang.warna_bunga:
-            print("   Pilih Warna Bunga:")
+            print(f"  {c.BOLD_YELLOW}🌺 Pilih Warna Bunga:{c.RESET}")
             for i, w in enumerate(barang.warna_bunga, start=1):
-                print(f"   {i}) {w}")
-            pilih_wb = input_int("   Pilih warna bunga (nomor): ", min_val=1, max_val=len(barang.warna_bunga))
+                print(f"    {c.CYAN}[{i}]{c.RESET} {w}")
+            pilih_wb = input_int(f"  {c.GREEN}▸ Pilih (1-{len(barang.warna_bunga)}): {c.RESET}", min_val=1, max_val=len(barang.warna_bunga))
             warna_bunga_dipilih = barang.warna_bunga[pilih_wb - 1]
         
         # Show ukuran options
-        print("   Pilih Ukuran:")
+        print(f"  {c.BOLD_YELLOW}📦 Pilih Ukuran:{c.RESET}")
         for i, u in enumerate(barang.ukuran, start=1):
-            print(f"   {i}) {u.nama} - Rp{format_rupiah(u.harga)} (Stok: {u.stok})")
+            stok_color = c.BOLD_GREEN if u.stok > 5 else (c.BOLD_YELLOW if u.stok > 0 else c.BOLD_RED)
+            print(f"    {c.CYAN}[{i}]{c.RESET} {u.nama} - {c.WHITE}Rp{format_rupiah(u.harga)}{c.RESET} {stok_color}(Stok: {u.stok}){c.RESET}")
         
-        pilih_ukuran = input_int("   Pilih ukuran (nomor): ", min_val=1, max_val=len(barang.ukuran))
+        pilih_ukuran = input_int(f"  {c.GREEN}▸ Pilih (1-{len(barang.ukuran)}): {c.RESET}", min_val=1, max_val=len(barang.ukuran))
         ukuran = barang.ukuran[pilih_ukuran - 1]
         
         if ukuran.stok == 0:
-            print("[!] Stok ukuran ini habis.")
+            print_error("Stok ukuran ini habis.")
             continue
         
-        qty = input_int("Qty: ", min_val=1)
+        qty = input_int(f"  {c.GREEN}▸ Qty: {c.RESET}", min_val=1)
         if qty > ukuran.stok:
-            print("[!] Qty melebihi stok.")
+            print_error("Qty melebihi stok.")
             continue
         
         # Buat item dan kurangi stok
@@ -322,10 +350,10 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
         )
         keranjang.append(item)
         ukuran.stok -= qty
-        print("[✓] Ditambahkan ke keranjang.\n")
+        print_success(f"Ditambahkan ke keranjang! Subtotal: Rp{format_rupiah(item.subtotal)}")
     
     if not keranjang:
-        print("[!] Tidak ada item. Transaksi dibatalkan.")
+        print_warning("Tidak ada item. Transaksi dibatalkan.")
         return False
     
     # Hitung total dan diskon
@@ -333,9 +361,10 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
     diskon = hitung_diskon(total)
     
     # Info pembeli
-    print("\n=== RINGKASAN ===")
-    nama_pembeli = input_non_empty("Nama pembeli: ")
-    tanggal_pengambilan = input("Tanggal pengambilan (YYYY-MM-DD) (boleh kosong): ").strip()
+    print(f"\n{c.BOLD_CYAN}┌─── 👤 Info Pembeli ──────────────────────────────┐{c.RESET}")
+    nama_pembeli = input_non_empty(f"{c.CYAN}│ Nama pembeli: {c.RESET}")
+    tanggal_pengambilan = input(f"{c.CYAN}│ Tanggal pengambilan (YYYY-MM-DD): {c.RESET}").strip()
+    print(f"{c.BOLD_CYAN}└────────────────────────────────────────────────┘{c.RESET}")
     
     # Pilih pengantaran
     ongkir, delivery = pilih_pengantaran()
@@ -346,14 +375,18 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
     tampil_struk(keranjang, total, diskon, ongkir, total_bayar)
     
     # Proses pembayaran
-    bayar = input_float("Uang bayar: ", min_val=0)
+    print(f"\n{c.BOLD_GREEN}┌─── 💵 Pembayaran ────────────────────────────────┐{c.RESET}")
+    bayar = input_float(f"{c.CYAN}│ Uang bayar: Rp{c.RESET}", min_val=0)
+    
     if bayar < total_bayar:
-        print("[!] Uang kurang. Transaksi dibatalkan dan stok dikembalikan.")
+        print(f"{c.BOLD_GREEN}└──────────────────────────────────────────────┘{c.RESET}")
+        print_error("Uang kurang. Transaksi dibatalkan dan stok dikembalikan.")
         rollback_stok(barang_list, keranjang)
         return False
     
     kembalian = bayar - total_bayar
-    print(f"Kembalian: Rp{format_rupiah(kembalian)}")
+    print(f"{c.BOLD_WHITE}│ Kembalian: {c.BOLD_YELLOW}Rp{format_rupiah(kembalian)}{c.RESET}")
+    print(f"{c.BOLD_GREEN}└──────────────────────────────────────────────┘{c.RESET}")
     
     # Simpan transaksi
     trx_id = save_transaksi(keranjang, diskon, ongkir, delivery, total_bayar)
@@ -367,42 +400,59 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
                 nama_pembeli, tanggal_pengambilan, trx_id
             )
             if img_path:
-                print(f"[✓] Struk diekspor ke gambar: {img_path}")
+                print_info(f"Struk diekspor ke: {img_path}")
         except Exception as e:
-            print(f"[!] Gagal ekspor struk ke gambar: {e}")
+            print_warning(f"Gagal ekspor struk: {e}")
     
-    print("[✓] Transaksi berhasil disimpan.")
+    print_success("Transaksi berhasil disimpan!")
     return True
 
 
 def tampil_riwayat(limit: int = 20) -> None:
     """Tampilkan riwayat transaksi terakhir."""
+    c = Colors
     rows = load_transaksi(limit)
     
     if not rows:
-        print("\n[!] Belum ada transaksi.\n")
+        print_warning("Belum ada transaksi.")
         return
     
-    print("\n=== RIWAYAT TRANSAKSI (TERAKHIR) ===")
+    print(f"\n{c.BOLD_CYAN}╔══════════════════════════════════════════════════════════════╗{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}          {c.BOLD_MAGENTA}📜 RIWAYAT TRANSAKSI TERAKHIR 📜{c.RESET}               {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}╚══════════════════════════════════════════════════════════════╝{c.RESET}")
+    
     for r in rows:
-        print(f"\n[{r.get('id_transaksi', 'N/A')}] {r.get('waktu', 'N/A')}")
-        print(f"  Kode: {r.get('kode', 'N/A')} - {r.get('nama', 'N/A')}")
-        print(f"  Ukuran: {r.get('ukuran', '-')}")
-        print(f"  Warna Kertas: {r.get('warna_kertas', '-')}, Warna Bunga: {r.get('warna_bunga', '-')}")
-        print(f"  Qty: {r.get('qty', '0')}, Subtotal: Rp{format_rupiah(float(r.get('subtotal', 0)))}")
-        print(f"  Delivery: {r.get('delivery', '-')}, Ongkir: Rp{format_rupiah(float(r.get('ongkir', 0)))}")
-        print(f"  Total Transaksi: Rp{format_rupiah(float(r.get('total_transaksi', 0)))}")
-    print("-" * 50)
+        print(f"\n{c.BOLD_YELLOW}┌─ [{r.get('id_transaksi', 'N/A')}] ─────────────────────────────────────────┐{c.RESET}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.DIM}📅 {r.get('waktu', 'N/A')}{c.RESET}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}📦 Kode:{c.RESET} {r.get('kode', 'N/A')} - {c.BOLD_WHITE}{r.get('nama', 'N/A')}{c.RESET}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}📏 Ukuran:{c.RESET} {r.get('ukuran', '-')}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}🎨 Warna:{c.RESET} Kertas: {r.get('warna_kertas', '-')}, Bunga: {r.get('warna_bunga', '-')}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}🔢 Qty:{c.RESET} {r.get('qty', '0')} | {c.WHITE}Subtotal: Rp{format_rupiah(float(r.get('subtotal', 0)))}{c.RESET}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.CYAN}🚚 Delivery:{c.RESET} {r.get('delivery', '-')} | Ongkir: Rp{format_rupiah(float(r.get('ongkir', 0)))}")
+        print(f"{c.BOLD_YELLOW}│{c.RESET} {c.BOLD_GREEN}💰 Total: Rp{format_rupiah(float(r.get('total_transaksi', 0)))}{c.RESET}")
+        print(f"{c.BOLD_YELLOW}└────────────────────────────────────────────────────────────────┘{c.RESET}")
 
 
 def tampil_rekap() -> None:
     """Tampilkan rekap total pendapatan."""
+    c = Colors
     jumlah_trx, total_pendapatan = get_rekap_pendapatan()
     
     if jumlah_trx == 0:
-        print("\n[!] Belum ada transaksi.\n")
+        print_warning("Belum ada transaksi.")
         return
     
-    print("\n=== REKAP ===")
-    print(f"Jumlah transaksi : {jumlah_trx}")
-    print(f"Total pendapatan : Rp{format_rupiah(total_pendapatan)}\n")
+    print(f"""
+{c.BOLD_CYAN}╔══════════════════════════════════════════════════╗{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}          {c.BOLD_MAGENTA}💰 REKAP PENDAPATAN 💰{c.RESET}                 {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}╠══════════════════════════════════════════════════╣{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_WHITE}📊 Jumlah Transaksi{c.RESET}                          {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_YELLOW}{jumlah_trx:>6}{c.RESET} transaksi                            {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_WHITE}💵 Total Pendapatan{c.RESET}                          {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_GREEN}Rp {format_rupiah(total_pendapatan):>15}{c.RESET}                        {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}╚══════════════════════════════════════════════════╝{c.RESET}
+""")
+

@@ -1,0 +1,36 @@
+PSEUDOCODE: TAMPIL KATALOG BUQET
+=================================
+
+FUNCTION tampil_semua_barang(daftar_barang)
+    
+    IF daftar_barang IS EMPTY THEN
+        PRINT "Data barang masih kosong"
+        RETURN
+    END IF
+    
+    PRINT "DAFTAR KATALOG BUQET"
+    
+    SET nomor = 1
+    FOR EACH barang IN daftar_barang DO
+        
+        PRINT nomor, barang.kode, barang.nama
+        
+        IF barang.warna_kertas NOT EMPTY THEN
+            PRINT "Warna Kertas:", barang.warna_kertas
+        END IF
+        
+        IF barang.warna_bunga NOT EMPTY THEN
+            PRINT "Warna Bunga:", barang.warna_bunga
+        END IF
+        
+        PRINT "Ukuran    Harga       HPP      Stok"
+        PRINT "------------------------------------"
+        
+        FOR EACH ukuran IN barang.daftar_ukuran DO
+            PRINT ukuran.nama, ukuran.harga, ukuran.hpp, ukuran.stok
+        END FOR
+        
+        SET nomor = nomor + 1
+    END FOR
+
+END FUNCTION

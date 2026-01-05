@@ -1,0 +1,59 @@
+PSEUDOCODE: MAIN MENU
+=====================
+
+FUNCTION main_menu()
+    
+    SET daftar_barang = muat_barang()
+    
+    WHILE TRUE DO
+        
+        PRINT "SISTEM KASIR BUQEUET LIYA"
+        PRINT "1. Tampilkan Katalog Buqet"
+        PRINT "2. Tambah Katalog Buqet"
+        PRINT "3. Update Katalog"
+        PRINT "4. Cari Buqet"
+        PRINT "5. Transaksi Penjualan"
+        PRINT "6. Riwayat Transaksi"
+        PRINT "7. Rekap Pendapatan"
+        PRINT "0. Keluar"
+        
+        INPUT pilihan FROM user
+        
+        IF pilihan == "1" THEN
+            CALL tampil_semua_barang(daftar_barang)
+            
+        ELSE IF pilihan == "2" THEN
+            CALL tambah_barang(daftar_barang)
+            
+        ELSE IF pilihan == "3" THEN
+            CALL update_barang(daftar_barang)
+            
+        ELSE IF pilihan == "4" THEN
+            CALL cari_barang(daftar_barang)
+            
+        ELSE IF pilihan == "5" THEN
+            CALL proses_transaksi(daftar_barang)
+            // Reload data setelah transaksi
+            SET daftar_barang = muat_barang()
+            
+        ELSE IF pilihan == "6" THEN
+            CALL tampil_riwayat(20)
+            
+        ELSE IF pilihan == "7" THEN
+            CALL tampil_rekap()
+            
+        ELSE IF pilihan == "0" THEN
+            PRINT "Sampai jumpa!"
+            BREAK
+            
+        ELSE
+            PRINT "Menu tidak valid"
+        END IF
+        
+    END WHILE
+
+END FUNCTION
+
+
+// Entry point program
+CALL main_menu()

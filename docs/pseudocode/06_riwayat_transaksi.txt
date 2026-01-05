@@ -1,0 +1,54 @@
+PSEUDOCODE: RIWAYAT TRANSAKSI
+=============================
+
+FUNCTION tampil_riwayat(limit)
+    
+    SET daftar_transaksi = muat_transaksi(limit)
+    
+    IF daftar_transaksi IS EMPTY THEN
+        PRINT "Belum ada transaksi"
+        RETURN
+    END IF
+    
+    PRINT "RIWAYAT TRANSAKSI TERAKHIR"
+    
+    FOR EACH transaksi IN daftar_transaksi DO
+        PRINT "ID:", transaksi.id_transaksi
+        PRINT "Waktu:", transaksi.waktu
+        PRINT "Kode:", transaksi.kode, "-", transaksi.nama
+        PRINT "Ukuran:", transaksi.ukuran
+        PRINT "Warna Kertas:", transaksi.warna_kertas
+        PRINT "Warna Bunga:", transaksi.warna_bunga
+        PRINT "Qty:", transaksi.qty
+        PRINT "Subtotal:", transaksi.subtotal
+        PRINT "Delivery:", transaksi.delivery
+        PRINT "Ongkir:", transaksi.ongkir
+        PRINT "Total Transaksi:", transaksi.total_transaksi
+        PRINT "------------------------"
+    END FOR
+
+END FUNCTION
+
+
+FUNCTION muat_transaksi(limit)
+    
+    CALL inisialisasi_file_transaksi()
+    
+    SET semua_baris = []
+    
+    OPEN file transaksi.csv
+    FOR EACH baris IN file DO
+        APPEND baris TO semua_baris
+    END FOR
+    CLOSE file
+    
+    // Ambil hanya [limit] baris terakhir
+    IF LENGTH(semua_baris) > limit THEN
+        SET hasil = semua_baris[-(limit):]
+    ELSE
+        SET hasil = semua_baris
+    END IF
+    
+    RETURN hasil
+
+END FUNCTION
