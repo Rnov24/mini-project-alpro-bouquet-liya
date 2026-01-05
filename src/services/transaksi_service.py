@@ -346,7 +346,7 @@ def proses_transaksi(barang_list: list[Barang]) -> bool:
         item = TransaksiItem.from_cart(
             barang.kode, barang.nama, ukuran.nama,
             warna_kertas_dipilih, warna_bunga_dipilih,
-            qty, ukuran.harga
+            qty, ukuran.harga, ukuran.hpp
         )
         keranjang.append(item)
         ukuran.stok -= qty
@@ -435,24 +435,15 @@ def tampil_riwayat(limit: int = 20) -> None:
 
 def tampil_rekap() -> None:
     """Tampilkan rekap total pendapatan."""
-    c = Colors
-    jumlah_trx, total_pendapatan = get_rekap_pendapatan()
+    jumlah_trx, total_pendapatan, total_modal, total_profit = get_rekap_pendapatan()
     
     if jumlah_trx == 0:
         print_warning("Belum ada transaksi.")
         return
     
-    print(f"""
-{c.BOLD_CYAN}╔══════════════════════════════════════════════════╗{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}          {c.BOLD_MAGENTA}💰 REKAP PENDAPATAN 💰{c.RESET}                 {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}╠══════════════════════════════════════════════════╣{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_WHITE}📊 Jumlah Transaksi{c.RESET}                          {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_YELLOW}{jumlah_trx:>6}{c.RESET} transaksi                            {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_WHITE}💵 Total Pendapatan{c.RESET}                          {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_GREEN}Rp {format_rupiah(total_pendapatan):>15}{c.RESET}                        {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}╚══════════════════════════════════════════════════╝{c.RESET}
-""")
-
+    print("===== REKAP TRANSAKSI =====")
+    print(f"Jumlah Transaksi : {jumlah_trx}")
+    print(f"Total Pendapatan : Rp {total_pendapatan:,.0f}")
+    print(f"Total Modal (HPP): Rp {total_modal:,.0f}")
+    print(f"Keuntungan       : Rp {total_profit:,.0f}")
+    print("===========================\n")

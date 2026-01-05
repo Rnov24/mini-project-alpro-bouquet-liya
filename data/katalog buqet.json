@@ -9,7 +9,7 @@
         "nama": "Standar",
         "harga": 12000.0,
         "hpp": 6000.0,
-        "stok": 9715
+        "stok": 9705
       }
     ]
   },
@@ -64,6 +64,449 @@
         "harga": 95000.0,
         "hpp": 80000.0,
         "stok": 0
+      }
+    ]
+  },
+  {
+    "kode": "4",
+    "nama": "buqet uang",
+    "warna_kertas": [
+      "hitam",
+      "coksu"
+    ],
+    "warna_bunga": [
+      "merah",
+      "biru"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 25.0,
+        "hpp": 2.0,
+        "stok": 25
+      },
+      {
+        "nama": "Standar",
+        "harga": 40000.0,
+        "hpp": 5000.0,
+        "stok": 77
+      },
+      {
+        "nama": "Besar",
+        "harga": 70000.0,
+        "hpp": 25000.0,
+        "stok": 9
+      }
+    ]
+  },
+  {
+    "kode": "5",
+    "nama": "buqet kawat bulu",
+    "warna_kertas": [
+      "biru",
+      "hitam",
+      "unggu"
+    ],
+    "warna_bunga": [
+      "merah",
+      "biru",
+      "oren"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 25000.0,
+        "hpp": 15000.0,
+        "stok": 20
+      },
+      {
+        "nama": "Standar",
+        "harga": 45000.0,
+        "hpp": 20000.0,
+        "stok": 22
+      },
+      {
+        "nama": "Besar",
+        "harga": 60000.0,
+        "hpp": 35000.0,
+        "stok": 10
+      }
+    ]
+  },
+  {
+    "kode": "BQ02",
+    "nama": "Buqet Bunga Palsu",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "bunga merah",
+      "bunga biru",
+      "bunga pink",
+      "bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 20000.0,
+        "hpp": 17000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 55000.0,
+        "hpp": 45000.0,
+        "stok": 20
+      },
+      {
+        "nama": "Besar",
+        "harga": 90000.0,
+        "hpp": 85000.0,
+        "stok": 50
+      }
+    ]
+  },
+  {
+    "kode": "BQ03",
+    "nama": "Buqet Bunga Kertas Skripsi",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 55000.0,
+        "hpp": 45000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 70000.0,
+        "hpp": 60000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 90000.0,
+        "hpp": 80000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ04",
+    "nama": "Buqet Foto",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 53000.0,
+        "hpp": 43000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 63000.0,
+        "hpp": 53000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 78000.0,
+        "hpp": 68000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ05",
+    "nama": "Buqet Foto & Bunga",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga Ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 10000.0,
+        "hpp": 7000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 25000.0,
+        "hpp": 20000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 58000.0,
+        "hpp": 50000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ07",
+    "nama": "Buqet Kosongan",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Tidak ada"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 18000.0,
+        "hpp": 15000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 25000.0,
+        "hpp": 20000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 33000.0,
+        "hpp": 23000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ08",
+    "nama": "Buqet Kosongan & Bunga",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 25000.0,
+        "hpp": 20000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 33000.0,
+        "hpp": 23000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 46000.0,
+        "hpp": 36000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ09",
+    "nama": "Buqet Kupu-Kupu",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 32000.0,
+        "hpp": 27000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 48000.0,
+        "hpp": 38000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 58000.0,
+        "hpp": 48000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ10",
+    "nama": "Buqet Round pita satin",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 58000.0,
+        "hpp": 50000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 75000.0,
+        "hpp": 65000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 90000.0,
+        "hpp": 80000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ11",
+    "nama": "Buqet Snack",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga Merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bung ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 50000.0,
+        "hpp": 40000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 62000.0,
+        "hpp": 52000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 70000.0,
+        "hpp": 60000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ13",
+    "nama": "Buqet Uang & Bunga",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 54000.0,
+        "hpp": 44000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 65000.0,
+        "hpp": 55000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 70000.0,
+        "hpp": 60000.0,
+        "stok": 100
       }
     ]
   }
