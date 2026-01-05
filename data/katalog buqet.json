@@ -170,5 +170,81 @@
         "stok": 50
       }
     ]
+  },
+  {
+    "kode": "BQ03",
+    "nama": "Buqet Bunga Kertas Skripsi",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 55000.0,
+        "hpp": 45000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 70000.0,
+        "hpp": 60000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 90000.0,
+        "hpp": 80000.0,
+        "stok": 100
+      }
+    ]
+  },
+  {
+    "kode": "BQ04",
+    "nama": "Buqet Foto",
+    "warna_kertas": [
+      "hitam",
+      "ungu",
+      "oren",
+      "pink",
+      "biru",
+      "abu-abu"
+    ],
+    "warna_bunga": [
+      "Bunga merah",
+      "Bunga biru",
+      "Bunga pink",
+      "Bunga ungu"
+    ],
+    "ukuran": [
+      {
+        "nama": "Mini",
+        "harga": 53000.0,
+        "hpp": 43000.0,
+        "stok": 10000
+      },
+      {
+        "nama": "Standar",
+        "harga": 63000.0,
+        "hpp": 53000.0,
+        "stok": 1000
+      },
+      {
+        "nama": "Besar",
+        "harga": 78000.0,
+        "hpp": 68000.0,
+        "stok": 100
+      }
+    ]
   }
 ]
