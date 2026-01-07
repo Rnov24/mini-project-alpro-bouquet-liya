@@ -181,4 +181,5 @@ Pilih menu **0) Keluar** untuk menghentikan aplikasi.
 1. Rijal
 2. Nihlah Auliya
 3. Rafi Erlangga Dwi Tama
-   Mahasiswa Teknik Informatika
+
+Mahasiswa Teknik Informatika

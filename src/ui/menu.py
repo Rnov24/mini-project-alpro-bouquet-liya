@@ -52,21 +52,21 @@ def display_menu() -> None:
     
     # Menu items - Katalog
     print(f"{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}  {c.BOLD_YELLOW}▸ KATALOG{c.RESET}                                      {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['1']} [{c.BOLD_WHITE}1{c.RESET}] Tampilkan Katalog Buqet               {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['2']} [{c.BOLD_WHITE}2{c.RESET}] Tambah Katalog Buqet                  {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['3']} [{c.BOLD_WHITE}3{c.RESET}] Update Katalog                        {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['4']} [{c.BOLD_WHITE}4{c.RESET}] Cari Buqet                            {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}  {c.BOLD_YELLOW}▸ KATALOG{c.RESET}                                       {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['1']} [{c.BOLD_WHITE}1{c.RESET}] Tampilkan Katalog Buqet                {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['2']} [{c.BOLD_WHITE}2{c.RESET}] Tambah Katalog Buqet                   {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['3']} [{c.BOLD_WHITE}3{c.RESET}] Update Katalog                          {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['4']} [{c.BOLD_WHITE}4{c.RESET}] Cari Buqet                             {c.BOLD_CYAN}║{c.RESET}")
     
     print(f"{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}  {c.BOLD_GREEN}▸ TRANSAKSI{c.RESET}                                    {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['5']} [{c.BOLD_WHITE}5{c.RESET}] Transaksi Penjualan                   {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['6']} [{c.BOLD_WHITE}6{c.RESET}] Riwayat Transaksi                     {c.BOLD_CYAN}║{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['7']} [{c.BOLD_WHITE}7{c.RESET}] Rekap Pendapatan                      {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}  {c.BOLD_GREEN}▸ TRANSAKSI{c.RESET}                                     {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['5']} [{c.BOLD_WHITE}5{c.RESET}] Transaksi Penjualan                    {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['6']} [{c.BOLD_WHITE}6{c.RESET}] Riwayat Transaksi                      {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['7']} [{c.BOLD_WHITE}7{c.RESET}] Rekap Pendapatan                       {c.BOLD_CYAN}║{c.RESET}")
     
     print(f"{c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}")
     print(f"{c.BOLD_CYAN}╠══════════════════════════════════════════════════╣{c.RESET}")
-    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['0']} [{c.BOLD_RED}0{c.RESET}] Keluar                                {c.BOLD_CYAN}║{c.RESET}")
+    print(f"{c.BOLD_CYAN}║{c.RESET}    {MENU_ICONS['0']} [{c.BOLD_RED}0{c.RESET}] Keluar                                 {c.BOLD_CYAN}║{c.RESET}")
     print(f"{c.BOLD_CYAN}╚══════════════════════════════════════════════════╝{c.RESET}")
     print()
 
@@ -77,10 +77,10 @@ def display_goodbye() -> None:
     print(f"""
 {c.BOLD_CYAN}╔══════════════════════════════════════════════════╗{c.RESET}
 {c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_MAGENTA}✿ Terima kasih telah menggunakan ✿{c.RESET}           {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}       {c.BOLD_WHITE}SISTEM KASIR BUQEUET LIYA{c.RESET}                {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_MAGENTA}✿ Terima kasih telah menggunakan ✿{c.RESET}             {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}       {c.BOLD_WHITE}SISTEM KASIR BUQEUET LIYA{c.RESET}                  {c.BOLD_CYAN}║{c.RESET}
 {c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
-{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_GREEN}Sampai jumpa! Semoga sukses selalu 🌸{c.RESET}        {c.BOLD_CYAN}║{c.RESET}
+{c.BOLD_CYAN}║{c.RESET}   {c.BOLD_GREEN}Sampai jumpa! Semoga sukses selalu 🌸{c.RESET}          {c.BOLD_CYAN}║{c.RESET}
 {c.BOLD_CYAN}║{c.RESET}                                                  {c.BOLD_CYAN}║{c.RESET}
 {c.BOLD_CYAN}╚══════════════════════════════════════════════════╝{c.RESET}
 """)
