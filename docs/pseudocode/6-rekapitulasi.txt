@@ -1,0 +1,48 @@
+ALGORITMA REKAPITULASI DANA & LAPORAN
+
+START
+
+    // 1. Menu Rekap
+    DISPLAY Pilihan Periode:
+        [1] Harian (Hari Ini)
+        [2] Mingguan
+        [3] Bulanan
+        [4] Semua Data
+        
+    GET Pilihan User -> Tentukan Start_Date dan End_Date
+
+    // 2. Proses Data
+    READ File `transaksi.csv`
+    INIT Variabel:
+        Total_Omzet = 0
+        Total_Modal_HPP = 0
+        Total_Profit = 0
+        Total_Qty_Terjual = 0
+        Product_Counter = Map<String, Int>
+
+    // 3. Iterasi Data
+    FOR EACH Transaksi IN File CSV DO
+        IF Tanggal Transaksi BETWEEN Start_Date AND End_Date THEN
+            ADD Transaksi.Total ke Total_Omzet
+            ADD Transaksi.TotalHPP ke Total_Modal_HPP
+            ADD Transaksi.Profit ke Total_Profit
+            ADD Transaksi.Qty ke Total_Qty_Terjual
+            
+            INCREMENT Product_Counter[Transaksi.NamaBarang] by Qty
+        END IF
+    END FOR
+
+    // 4. Analisis Tambahan
+    Top_Product = FIND Max Value in Product_Counter
+    
+    // 5. Tampilkan Hasil
+    DISPLAY Report Header "LAPORAN KEUANGAN"
+    DISPLAY "Periode: " + Start_Date + " - " + End_Date
+    DISPLAY "--------------------------------"
+    DISPLAY "Total Penjualan : Rp " + Total_Omzet
+    DISPLAY "Total Modal     : Rp " + Total_Modal_HPP
+    DISPLAY "Gross Profit    : Rp " + Total_Profit
+    DISPLAY "--------------------------------"
+    DISPLAY "Produk Terlaris : " + Top_Product
+
+END

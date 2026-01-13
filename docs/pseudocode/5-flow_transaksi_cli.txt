@@ -1,0 +1,70 @@
+ALGORITMA FLOW TRANSAKSI CLI (KASIR)
+
+START
+
+    // 1. Mulai Transaksi Baru
+    INIT Keranjang Belanja (Memory)
+    
+    // 2. Input Item loop
+    LOOP
+        DISPLAY "Isi Keranjang: [List Item]"
+        PROMPT Menu: [1] Tambah Item, [2] Hapus, [3] Bayar
+        
+        IF Pilih Tambah Item THEN
+            DISPLAY Form Cari Barang
+            User Input Kode/Nama
+            
+            IF Barang Found THEN
+                User Pilih Ukuran
+                User Input Qty
+                
+                IF Stok Cukup THEN
+                    ADD Item to Keranjang
+                    REDUCE Stok Sementara (Logic Display)
+                ELSE
+                    DISPLAY Error Stok
+                END IF
+            END IF
+        END IF
+        
+        IF Pilih Bayar THEN BREAK LOOP
+    END LOOP
+    
+    // 3. Checkout information
+    PROMPT Input Nama Pembeli
+    PROMPT Input Diskon Manual (Optional)
+    
+    // 4. Delivery Info (Fitur Baru)
+    PROMPT Pilh Metode: [1] Pickup, [2] Delivery
+    IF Delivery THEN
+        PROMPT Input Biaya Ongkir
+        PROMPT Input Alamat
+        CALCULATE Total = Subtotal - Diskon + Ongkir
+    ELSE
+        CALCULATE Total = Subtotal - Diskon
+    END IF
+    
+    // 5. Finalisasi
+    DISPLAY Ringkasan Pembayaran
+    CONFIRM "Proses Transaksi?"
+    
+    IF Yes THEN
+        // Update Stok Real
+        FOR EACH Item in Keranjang DO
+            DECREMENT Stok di `barang.json`
+        END FOR
+        
+        // Simpan Transaksi history
+        GENERATE Transaction ID
+        CREATE Transaction Record
+        APPEND to `transaksi.csv`
+        
+        // Generate Struk
+        CALL Function Generate_Invoice_Image(Data)
+        SAVE Invoice Image to `data/invoice/`
+        
+        DISPLAY "Transaksi Sukses"
+        DISPLAY "Struk tersimpan di data/invoice/"
+    END IF
+
+END

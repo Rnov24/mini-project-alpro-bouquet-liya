@@ -1,0 +1,36 @@
+ALGORITMA MENU UTAMA BOT (BUYER & ADMIN)
+
+START
+
+    // 1. Terima Perintah /start
+    User (Buyer/Admin) mengirim command "/start"
+    
+    // 2. Cek Role User
+    IF ID User ada di Daftar Admin THEN
+        // Tampilkan Menu Admin
+        DISPLAY "Selamat Datang Admin"
+        DISPLAY Menu:
+            - [List Pesanan] (Kelola Order)
+            - [Rekap Keuangan] (Laporan)
+            - [Broadcast] (Kirim Pesan ke Semua Buyer)
+            
+    ELSE
+        // Tampilkan Menu Buyer
+        DISPLAY "Selamat Datang di Buqeuet Liya"
+        DISPLAY Menu:
+            - [Lihat Katalog] (Belanja)
+            - [Status Pesanan] (Cek Order)
+            - [Hubungi Admin] (Bantuan)
+    END IF
+
+    // 3. Handling Callback Menu
+    WAIT FOR USER INPUT (Button Click)
+    
+    CASE Input:
+        WHEN "List Pesanan": CALL Function CRUD_Order
+        WHEN "Rekap": CALL Function Rekapitulasi
+        WHEN "Lihat Katalog": CALL Function Flow_Transaksi_Bot
+        WHEN "Status": CALL Function Cek_Status_Order
+    END CASE
+
+END

@@ -1,0 +1,11 @@
+# Buqeuet Liya - Sistem Kasir & Telegram Bot
+# Python 3.10+
+
+# Telegram Bot
+python-telegram-bot>=20.0
+
+# Environment Variables
+python-dotenv>=1.0.0
+
+# Image Processing (optional, untuk export struk)
+Pillow>=10.0.0

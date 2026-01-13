@@ -1,0 +1,41 @@
+ALGORITMA MENU UTAMA CLI (CONSOLE APP)
+
+START
+
+    // 1. Inisialisasi
+    LOAD Data Config (Env Variables)
+    INIT System (Database Connections, etc.)
+
+    // 2. Main Loop
+    LOOP FOREVER DO
+        CLEAR SCREEN
+        DISPLAY Header "SISTEM MANAJEMEN BUQEUET LIYA"
+        
+        // 3. Tampilkan Menu Utama
+        DISPLAY Menu Options:
+            [1] Manajemen Katalog (CRUD Barang)
+            [2] Transaksi Kasir (POS Mode)
+            [3] Manajemen Pesanan (Order Bot)
+            [4] Laporan & Rekapitulasi
+            [0] Keluar Aplikasi
+            
+        PROMPT "Pilih Menu: "
+        GET User Input (Choice)
+        
+        // 4. Routing
+        SWITCH Choice:
+            CASE 1: CALL Function CRUD_Catalog
+            CASE 2: CALL Function Flow_Transaksi_CLI
+            CASE 3: CALL Function CRUD_Order
+            CASE 4: CALL Function Rekapitulasi
+            CASE 0: 
+                DISPLAY "Terima Kasih"
+                EXIT PROGRAM
+            DEFAULT:
+                DISPLAY "Pilihan Tidak Valid"
+        END SWITCH
+        
+        WAIT for Enter Key (Pause)
+    END LOOP
+
+END

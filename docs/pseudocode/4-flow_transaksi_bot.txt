@@ -1,0 +1,51 @@
+ALGORITMA FLOW TRANSAKSI BOT (BUYER)
+
+START
+
+    // 1. Mulai Belanja
+    User memilih "Lihat Katalog"
+    DISPLAY Daftar Kategori
+    User Pilih Kategori -> DISPLAY Daftar Produk
+    
+    // 2. Add to Cart (Session)
+    User Pilih Produk
+    DISPLAY Pilihan Ukuran & Harga
+    User Pilih Ukuran
+    
+    IF Stok Tersedia THEN
+        DISPLAY Pilihan Warna Kertas & Bunga
+        User Pilih Warna
+        PROMPT Input Qty
+        
+        CALCULATE Subtotal
+        ADD Item ke Session Keranjang Bot
+    ELSE
+        DISPLAY "Stok Habis"
+        RETURN
+    END IF
+    
+    // 3. Checkout
+    User klik "Checkout"
+    IF Keranjang Kosong THEN RETURN
+    
+    PROMPT Input Nama Penerima
+    PROMPT Input No HP/WA
+    
+    PROMPT Metode Pengiriman:
+        [1] Ambil Sendiri
+        [2] Delivery (Gojek/Grab) -> Minta Share Loc
+        
+    User Input Data Pengiriman
+    
+    // 4. Finalisasi Order
+    CALCULATE Total Estimasi (Belum Ongkir)
+    CREATE Order Object (Status = PENDING)
+    GENERATE Order ID
+    SAVE Order to `orders.json`
+    
+    // 5. Notifikasi
+    DISPLAY Invoice Sementara ke Buyer
+    NOTIFY Admin "Ada Order Baru! [ID]"
+    RESET Session Keranjang
+
+END

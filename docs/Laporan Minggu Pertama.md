@@ -5,7 +5,7 @@
 
 **Nama Proyek:** Sistem Kasir Buqeuet Liya  
 **Deskripsi:** Aplikasi Point of Sale (POS) untuk UMKM penjualan buket bunga  
-**Tanggal:** 5 Januari 2026
+**Tanggal:** 31 Desember 2025 - 7 Januari 2026
 
 ---
 

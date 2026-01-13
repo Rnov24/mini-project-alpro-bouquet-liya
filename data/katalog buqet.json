@@ -27,7 +27,7 @@
         "nama": "Standar",
         "harga": 65000,
         "hpp": 48000,
-        "stok": 15
+        "stok": 11
       },
       {
         "nama": "Besar",
@@ -65,7 +65,7 @@
         "nama": "Standar",
         "harga": 40000,
         "hpp": 28000,
-        "stok": 30
+        "stok": 26
       },
       {
         "nama": "Besar",
@@ -103,7 +103,7 @@
         "nama": "Standar",
         "harga": 50000,
         "hpp": 36000,
-        "stok": 25
+        "stok": 24
       },
       {
         "nama": "Besar",
@@ -141,7 +141,7 @@
         "nama": "Standar",
         "harga": 55000,
         "hpp": 40000,
-        "stok": 20
+        "stok": 17
       },
       {
         "nama": "Besar",

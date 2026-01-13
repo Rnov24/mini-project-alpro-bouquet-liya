@@ -1,0 +1,79 @@
+ALGORITMA MANAJEMEN KATALOG (CRUD BARANG)
+
+START
+
+    // 1. Load Data
+    READ File `barang.json`
+    PARSE JSON ke List Struktur Barang
+
+    // 2. Tampilkan Menu Katalog
+    LOOP
+        DISPLAY Menu:
+            [1] Tampilkan Semua Barang
+            [2] Cari Barang
+            [3] Tambah Barang Baru
+            [4] Update Harga/Stok
+            [5] Hapus Barang
+            [0] Kembali
+            
+        GET Pilihan User
+        
+        // CASE: Read (Tampil Semua)
+        IF Pilihan == 1 THEN
+            FOR EACH Barang IN List Barang DO
+                DISPLAY Kode, Nama, Varian Ukuran, Stok
+            END FOR
+        END IF
+        
+        // CASE: Search & Detail
+        IF Pilihan == 2 THEN
+            PROMPT Keyword (Nama/Kode)
+            FILTER List Barang by Keyword
+            DISPLAY Hasil Pencarian
+        END IF
+        
+        // CASE: Create (Tambah)
+        IF Pilihan == 3 THEN
+            PROMPT Input Kode Unik
+            IF Kode Exists THEN ALERT Error; CONTINUE;
+            
+            PROMPT Input Nama Barang
+            
+            // Input Varian (Loop)
+            INIT List Varian
+            LOOP Input Varian:
+                PROMPT Nama Ukuran (S/M/L)
+                PROMPT Harga Jual
+                PROMPT Modal (HPP)
+                PROMPT Stok Awal
+                ADD to List Varian
+            END LOOP
+            
+            CREATE Object Barang Baru
+            ADD ke List Barang
+            SAVE to `barang.json`
+        END IF
+        
+        // CASE: Update
+        IF Pilihan == 4 THEN
+            SEARCH Barang
+            SELECT Barang & Varian Ukuran
+            PROMPT Input Stok Baru OR Harga Baru
+            UPDATE Object Barang
+            SAVE to `barang.json`
+        END IF
+        
+        // CASE: Delete
+        IF Pilihan == 5 THEN
+            SEARCH Barang
+            CONFIRM "Yakin Hapus?"
+            IF Yes THEN
+                REMOVE from List Barang
+                SAVE to `barang.json`
+            END IF
+        END IF
+        
+        IF Pilihan == 0 THEN BREAK LOOP
+    END LOOP
+
+END

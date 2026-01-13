@@ -1,0 +1,64 @@
+ALGORITMA CRUD ORDER (MANAJEMEN PESANAN - ADMIN)
+
+START
+
+    // 1. Tampilkan Daftar Order
+    READ File `orders.json` (Order Aktif)
+    FILTER Order yang statusnya != COMPLETED
+    SORT Order by Date (Newest First)
+    
+    DISPLAY List Order (ID, Nama, Status)
+    
+    // 2. Pilih Order
+    PROMPT Pilih Nomor Order/ID
+    DISPLAY Detail Order Lengkap (Item, Subtotal, Data Pembeli)
+    
+    // 3. Aksi Berdasarkan Status
+    SWITCH Status Order:
+    
+        CASE PENDING:
+            // Order baru masuk
+            OPTION [1] Terima/Proses, [2] Tolak/Batal
+            
+            IF Terima THEN
+                UPDATE Status = PROCESSING
+                NOTIFY Buyer "Pesanan diproses"
+            END IF
+            
+        CASE PROCESSING:
+            // Sedang dikerjakan
+            OPTION [1] Set Ready (Selesai Dibuat)
+            
+            IF Set Ready THEN
+                PROMPT Input Ongkir Tambahan (Optional)
+                PROMPT Input Diskon (Optional)
+                UPDATE Status = READY
+                UPDATE Total Bayar (Subtotal + Ongkir - Diskon)
+                NOTIFY Buyer "Pesanan Siap & Total Tagihan"
+            END IF
+            
+        CASE READY:
+            // Menunggu pembayaran/pengambilan
+            OPTION [1] Selesaikan Order (Lunas), [2] Batal
+            
+            IF Selesaikan THEN
+                // Finalisasi
+                UPDATE Status = COMPLETED
+                
+                // Pindah ke History
+                Data Order -> Finalize Format
+                GENERATE Invoice Image (Struk Final)
+                SAVE Transaction to `transaksi.csv`
+                DECREMENT Stok Barang (Jika belum di awal)
+                
+                DELETE Order form `orders.json`
+                
+                NOTIFY Buyer "Pesanan Selesai. Terima kasih."
+                DISPLAY "Order Completed & Archived."
+            END IF
+            
+    END SWITCH
+    
+    SAVE Changes to `orders.json`
+
+END
