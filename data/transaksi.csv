@@ -14,3 +14,4 @@ waktu,id_transaksi,kode,nama,ukuran,warna_kertas,warna_bunga,qty,harga,subtotal,
 2026-01-13 21:03:45,INV-20260113-OYKD,A3,Buqet Bunga Kertas,Mini,coklat,ungu,3,35000,105000,25000,75000,30000,0,10000,delivery,115000, online
 2026-01-13 21:30:22,INV-20260113-SDU4,A3,Buqet Bunga Kertas,Standar,hitam,ungu,4,50000,200000,36000,144000,56000,20000.0,0.0,ambil,180000.0,offline
 2026-01-13 21:53:44,INV-20260113-2LPQ,B1,Buqet Foto,Besar,coklat,putih,6,75000,450000,55000,330000,120000,22500.0,10000.0,delivery,437500.0,online
+2026-01-14 09:37:47,INV-20260114-W49U,B1,Buqet Foto,Besar,Hitam,pink,2,75000.0,150000.0,55000.0,110000.0,40000.0,0.0,10000.0,delivery,160000.0,offline
