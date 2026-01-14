@@ -6,6 +6,7 @@ from telegram.ext import ContextTypes
 from datetime import datetime
 
 from bot.shared.sessions import buyer_sessions, init_buyer_session
+from bot.shared.errors import safe_handler, safe_callback, validate_quantity, validate_phone, log_error
 from .keyboards import (
     menu_utama, menu_kategori, keyboard_produk, keyboard_detail_produk,
     keyboard_ukuran, keyboard_warna, keyboard_konfirmasi_item,
@@ -23,6 +24,7 @@ from core.services.invoice_service import generate_invoice_text, format_order_re
 from bot.shared.notifications import notify_admins_new_order
 
 
+@safe_handler("buyer_start")
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler /start command."""
     chat_id = update.effective_chat.id
@@ -42,6 +44,7 @@ Pilih menu di bawah ini:"""
     )
 
 
+@safe_callback("buyer_callback_router")
 async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Router untuk semua callback query."""
     query = update.callback_query
@@ -365,12 +368,14 @@ https://wa.me/6281234567890"""
         )
 
 
+@safe_handler("buyer_text_handler")
 async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler untuk input text dari user."""
     chat_id = update.effective_chat.id
     
     if chat_id not in buyer_sessions:
         init_buyer_session(chat_id)
+        await update.message.reply_text("⏰ Sesi berakhir. Ketik /start untuk memulai lagi.")
         return
     
     session = buyer_sessions[chat_id]
@@ -378,18 +383,24 @@ async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # ===== INPUT QTY =====
     if session["state"] == STATE_INPUT_QTY:
-        if not text.isdigit() or int(text) <= 0:
-            await update.message.reply_text("⚠️ Masukkan angka yang valid!")
-            return
-        
-        qty = int(text)
+        # Validate quantity using helper
         kode = session.get("barang_aktif")
         barang_list = load_barang_dict()
         barang = next((b for b in barang_list if b["kode"] == kode), None)
-        ukuran_data = next((u for u in barang["ukuran"] if u["nama"] == session["ukuran_aktif"]), None)
         
-        if qty > ukuran_data["stok"]:
-            await update.message.reply_text(f"⚠️ Stok tidak cukup! Tersedia: {ukuran_data['stok']}")
+        if not barang:
+            await update.message.reply_text("❌ Produk tidak ditemukan. Ketik /start untuk mulai lagi.")
+            return
+        
+        ukuran_data = next((u for u in barang["ukuran"] if u["nama"] == session.get("ukuran_aktif")), None)
+        
+        if not ukuran_data:
+            await update.message.reply_text("❌ Ukuran tidak ditemukan. Ketik /start untuk mulai lagi.")
+            return
+        
+        is_valid, qty, error_msg = validate_quantity(text, ukuran_data["stok"])
+        if not is_valid:
+            await update.message.reply_text(error_msg)
             return
         
         # Simpan ke keranjang
@@ -439,6 +450,12 @@ async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # ===== INPUT WA =====
     elif session["state"] == STATE_INPUT_WA:
+        # Validate phone number
+        is_valid, error_msg = validate_phone(text)
+        if not is_valid:
+            await update.message.reply_text(error_msg)
+            return
+        
         session["wa_pembeli"] = text
         session["state"] = STATE_PILIH_PENGIRIMAN
         await update.message.reply_text(
@@ -463,6 +480,7 @@ async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         session["state"] = STATE_MENU
 
 
+@safe_handler("buyer_location_handler")
 async def location_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler untuk location share dari user."""
     chat_id = update.effective_chat.id

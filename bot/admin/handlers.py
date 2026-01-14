@@ -8,6 +8,7 @@ import json
 import os
 
 from bot.shared.sessions import admin_sessions, init_admin_session
+from bot.shared.errors import safe_handler, safe_callback, validate_number, log_error
 from .keyboards import (
     menu_utama, menu_katalog, keyboard_produk_list, keyboard_ukuran_stok,
     keyboard_konfirmasi_hapus, keyboard_rekap_periode, keyboard_kembali,
@@ -70,6 +71,7 @@ Silakan transfer ke salah satu rekening di bawah:
 📸 Jangan lupa kirim bukti transfer ke Admin ya!"""
 
 
+@safe_handler("admin_start")
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler /start command."""
     chat_id = update.effective_chat.id
@@ -89,6 +91,7 @@ Pilih menu untuk mengelola toko:"""
     )
 
 
+@safe_handler("admin_daftar")
 async def daftar_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler /daftar command untuk registrasi admin."""
     chat_id = update.effective_chat.id
@@ -112,6 +115,7 @@ async def daftar_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+@safe_handler("admin_list_admins")
 async def list_admins(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler /listadmin command untuk melihat daftar admin."""
     chat_id = update.effective_chat.id
@@ -132,6 +136,7 @@ async def list_admins(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown"
     )
 
+@safe_callback("admin_callback_router")
 async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Router untuk semua callback query."""
     query = update.callback_query
@@ -697,12 +702,14 @@ async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
+@safe_handler("admin_text_handler")
 async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handler untuk input text dari admin."""
     chat_id = update.effective_chat.id
     
     if chat_id not in admin_sessions:
         init_admin_session(chat_id)
+        await update.message.reply_text("⏰ Sesi berakhir. Ketik /start untuk memulai lagi.")
         return
     
     session = admin_sessions[chat_id]
@@ -710,11 +717,10 @@ async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # ===== UPDATE STOK =====
     if session["state"] == STATE_UPDATE_STOK_VALUE:
-        if not text.isdigit():
-            await update.message.reply_text("⚠️ Masukkan angka yang valid!")
+        is_valid, stok_baru, error_msg = validate_number(text)
+        if not is_valid:
+            await update.message.reply_text(error_msg)
             return
-        
-        stok_baru = int(text)
         kode = session.get("barang_edit")
         ukuran_nama = session.get("ukuran_edit")
         
