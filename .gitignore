@@ -5,5 +5,7 @@ __pycache__/
 *.pyo
 *.pyd
 
+~*
+
 # Environment
 .env
