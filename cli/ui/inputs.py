@@ -2,9 +2,10 @@
 Fungsi input dengan validasi untuk CLI.
 
 Modul ini berisi fungsi-fungsi untuk mengambil input dari user
-dengan validasi built-in.
+dengan validasi built-in dan error messages yang konsisten.
 """
 from cli.ui.colors import Colors
+from cli.errors import ErrorMsg
 
 
 def input_styled(prompt: str) -> str:
@@ -19,7 +20,7 @@ def input_non_empty(prompt: str) -> str:
         value = input(prompt).strip()
         if value:
             return value
-        print("Input tidak boleh kosong.")
+        print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_EMPTY}{Colors.RESET}")
 
 
 def input_int(
@@ -32,14 +33,14 @@ def input_int(
         try:
             val = int(input(prompt).strip())
             if min_val is not None and val < min_val:
-                print(f"Nilai minimal adalah {min_val}.")
+                print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_BELOW_MIN.format(min_val=min_val)}{Colors.RESET}")
                 continue
             if max_val is not None and val > max_val:
-                print(f"Nilai maksimal adalah {max_val}.")
+                print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_ABOVE_MAX.format(max_val=max_val)}{Colors.RESET}")
                 continue
             return val
         except ValueError:
-            print("Harus berupa bilangan bulat.")
+            print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_NOT_INT}{Colors.RESET}")
 
 
 def input_float(prompt: str, min_val: float | None = None) -> float:
@@ -49,11 +50,11 @@ def input_float(prompt: str, min_val: float | None = None) -> float:
             raw = input(prompt).strip().replace(",", ".")
             val = float(raw)
             if min_val is not None and val < min_val:
-                print(f"Nilai minimal adalah {min_val}.")
+                print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_BELOW_MIN.format(min_val=min_val)}{Colors.RESET}")
                 continue
             return val
         except ValueError:
-            print("Harus berupa angka.")
+            print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_NOT_FLOAT}{Colors.RESET}")
 
 
 def input_choice(
@@ -72,7 +73,7 @@ def input_choice(
             for c in choices:
                 if value.lower() == c.lower():
                     return c
-        print(f"Pilihan tidak valid. Pilih: {choices_display}")
+        print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_INVALID_CHOICE.format(choices=choices_display)}{Colors.RESET}")
 
 
 def input_yes_no(prompt: str, default: bool = True) -> bool:
@@ -87,4 +88,4 @@ def input_yes_no(prompt: str, default: bool = True) -> bool:
             return True
         if value in ["n", "no", "tidak"]:
             return False
-        print("Masukkan Y untuk ya atau N untuk tidak.")
+        print(f"{Colors.BOLD_RED}✗ {ErrorMsg.INPUT_YES_NO}{Colors.RESET}")

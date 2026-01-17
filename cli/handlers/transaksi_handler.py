@@ -10,6 +10,7 @@ from cli.ui.helpers import (
 )
 from cli.ui.inputs import input_styled, input_non_empty, input_int, input_yes_no, input_float
 from cli.ui.colors import Colors
+from cli.errors import ErrorMsg, SuccessMsg, InfoMsg
 from core.services.barang_service import load_barang, find_by_kode, search_barang
 from core.models.cart import Cart, CartItem
 from core.services.order_service import create_order_from_cart
@@ -41,7 +42,7 @@ def show_riwayat_menu():
         elif choice == "2":
             show_rekap_summary()
         else:
-            print_error("Pilihan tidak valid.")
+            print_error(ErrorMsg.INVALID_CHOICE)
 
 def show_recent_transactions():
     """Menampilkan riwayat transaksi terakhir."""
@@ -50,7 +51,7 @@ def show_recent_transactions():
     
     rows = load_recent_transactions(limit=15)
     if not rows:
-        print_info("Belum ada data transaksi.")
+        print_info(ErrorMsg.TRANSACTION_EMPTY)
         input("Tekan Enter...")
         return
         
@@ -91,7 +92,7 @@ def new_transaction():
         
         # Show Cart
         if not cart.items:
-            print_info("Keranjang kosong.")
+            print_info(ErrorMsg.CART_EMPTY)
         else:
             print(f"Isi Keranjang ({len(cart.items)} items):")
             for i, item in enumerate(cart.items, 1):
@@ -113,7 +114,7 @@ def new_transaction():
             remove_item_from_cart(cart)
         elif choice == "3":
             if not cart.items:
-                print_error("Keranjang masih kosong!")
+                print_error(ErrorMsg.CART_EMPTY_CHECKOUT)
                 input("Tekan Enter...")
                 continue
             checkout_process(cart)
@@ -125,7 +126,7 @@ def new_transaction():
             else:
                 break
         else:
-            print_error("Pilihan tidak valid.")
+            print_error(ErrorMsg.INVALID_CHOICE)
 
 
 def add_item_to_cart(cart: Cart, barang_list: list):
@@ -137,7 +138,7 @@ def add_item_to_cart(cart: Cart, barang_list: list):
         
     results = search_barang(barang_list, query)
     if not results:
-        print_error("Barang tidak ditemukan.")
+        print_error(ErrorMsg.BARANG_SEARCH_EMPTY.format(keyword=query))
         input("Tekan Enter...")
         return
         
@@ -170,7 +171,7 @@ def add_item_to_cart(cart: Cart, barang_list: list):
         return
         
     if selected_ukuran.stok <= 0:
-        print_error("Stok habis!")
+        print_error(ErrorMsg.STOCK_EMPTY.format(nama=selected_barang.nama, ukuran=selected_ukuran.nama))
         input("Tekan Enter...")
         return
         
@@ -199,7 +200,7 @@ def add_item_to_cart(cart: Cart, barang_list: list):
         harga=selected_ukuran.harga,
         hpp=selected_ukuran.hpp
     ))
-    print_success("Item ditambahkan ke keranjang.")
+    print_success(SuccessMsg.CART_ITEM_ADDED)
 
 
 def remove_item_from_cart(cart: Cart):
@@ -215,7 +216,7 @@ def remove_item_from_cart(cart: Cart):
         idx = input_int("Pilih nomor item (0 batal): ", min_val=0, max_val=len(cart.items))
         if idx > 0:
             cart.remove_item(idx-1)
-            print_success("Item dihapus.")
+            print_success(SuccessMsg.CART_ITEM_REMOVED)
     except:
         pass
 
@@ -231,8 +232,6 @@ def checkout_process(cart: Cart):
     cart.nama_pembeli = input_non_empty("Nama Pembeli: ")
     cart.wa_pembeli = input_styled("No WA (Optional): ")
     
-    # Diskon
-    # Diskon
     # Diskon
     if input_yes_no("Berikan diskon?", default=False):
         diskon_rp = input_float("Nominal Diskon (Rp): ", min_val=0)
@@ -252,8 +251,6 @@ def checkout_process(cart: Cart):
         cart.delivery_type = "ambil"
         cart.ongkir = 0
     
-    # Hitung total (auto-calculated property)
-    
     print_divider()
     print(f"Subtotal : Rp {format_rupiah(cart.subtotal)}")
     if cart.diskon > 0:
@@ -265,7 +262,7 @@ def checkout_process(cart: Cart):
     
     # confirm
     if not input_yes_no("Proses transaksi?"):
-        print_info("Transaksi dibatalkan (keranjang tidak disimpan).")
+        print_info(ErrorMsg.TRANSACTION_CANCELLED)
         return
         
     # Process
@@ -279,11 +276,11 @@ def checkout_process(cart: Cart):
         # 3. Finalize (Save to CSV & Generate Invoice Image)
         trx_id, inv_path = finalize_order(order["order_id"], generate_invoice=True)
         
-        print_success(f"Transaksi Berhasil! ID: {trx_id}")
+        print_success(SuccessMsg.TRANSACTION_SUCCESS.format(trx_id=trx_id))
         if inv_path:
-            print_info(f"Invoice saved to: {inv_path}")
+            print_info(InfoMsg.INVOICE_SAVED.format(path=inv_path))
         input("Tekan Enter untuk kembali ke menu...")
         
     except Exception as e:
-        print_error(f"Gagal memproses transaksi: {e}")
+        print_error(ErrorMsg.TRANSACTION_FAILED.format(error=str(e)))
         input("Tekan Enter...")

@@ -19,20 +19,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 45000,
-        "hpp": 32000,
+        "harga": 45000.0,
+        "hpp": 32000.0,
         "stok": 20
       },
       {
         "nama": "Standar",
-        "harga": 65000,
-        "hpp": 48000,
+        "harga": 65000.0,
+        "hpp": 48000.0,
         "stok": 11
       },
       {
         "nama": "Besar",
-        "harga": 85000,
-        "hpp": 62000,
+        "harga": 85000.0,
+        "hpp": 62000.0,
         "stok": 10
       }
     ]
@@ -57,20 +57,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 25000,
-        "hpp": 18000,
+        "harga": 25000.0,
+        "hpp": 18000.0,
         "stok": 50
       },
       {
         "nama": "Standar",
-        "harga": 40000,
-        "hpp": 28000,
+        "harga": 40000.0,
+        "hpp": 28000.0,
         "stok": 26
       },
       {
         "nama": "Besar",
-        "harga": 55000,
-        "hpp": 40000,
+        "harga": 55000.0,
+        "hpp": 40000.0,
         "stok": 20
       }
     ]
@@ -95,20 +95,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 35000,
-        "hpp": 25000,
+        "harga": 35000.0,
+        "hpp": 25000.0,
         "stok": 40
       },
       {
         "nama": "Standar",
-        "harga": 50000,
-        "hpp": 36000,
+        "harga": 50000.0,
+        "hpp": 36000.0,
         "stok": 24
       },
       {
         "nama": "Besar",
-        "harga": 70000,
-        "hpp": 50000,
+        "harga": 70000.0,
+        "hpp": 50000.0,
         "stok": 15
       }
     ]
@@ -133,20 +133,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 40000,
-        "hpp": 28000,
+        "harga": 40000.0,
+        "hpp": 28000.0,
         "stok": 30
       },
       {
         "nama": "Standar",
-        "harga": 55000,
-        "hpp": 40000,
+        "harga": 55000.0,
+        "hpp": 40000.0,
         "stok": 17
       },
       {
         "nama": "Besar",
-        "harga": 75000,
-        "hpp": 55000,
+        "harga": 75000.0,
+        "hpp": 55000.0,
         "stok": 10
       }
     ]
@@ -171,20 +171,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 50000,
-        "hpp": 36000,
+        "harga": 50000.0,
+        "hpp": 36000.0,
         "stok": 25
       },
       {
         "nama": "Standar",
-        "harga": 70000,
-        "hpp": 50000,
+        "harga": 70000.0,
+        "hpp": 50000.0,
         "stok": 15
       },
       {
         "nama": "Besar",
-        "harga": 90000,
-        "hpp": 65000,
+        "harga": 90000.0,
+        "hpp": 65000.0,
         "stok": 10
       }
     ]
@@ -209,20 +209,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 35000,
-        "hpp": 25000,
+        "harga": 35000.0,
+        "hpp": 25000.0,
         "stok": 30
       },
       {
         "nama": "Standar",
-        "harga": 50000,
-        "hpp": 36000,
+        "harga": 50000.0,
+        "hpp": 36000.0,
         "stok": 20
       },
       {
         "nama": "Besar",
-        "harga": 70000,
-        "hpp": 50000,
+        "harga": 70000.0,
+        "hpp": 50000.0,
         "stok": 15
       }
     ]
@@ -247,20 +247,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 45000,
-        "hpp": 32000,
+        "harga": 45000.0,
+        "hpp": 32000.0,
         "stok": 25
       },
       {
         "nama": "Standar",
-        "harga": 65000,
-        "hpp": 48000,
+        "harga": 65000.0,
+        "hpp": 48000.0,
         "stok": 15
       },
       {
         "nama": "Besar",
-        "harga": 85000,
-        "hpp": 62000,
+        "harga": 85000.0,
+        "hpp": 62000.0,
         "stok": 10
       }
     ]
@@ -285,20 +285,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 40000,
-        "hpp": 28000,
+        "harga": 40000.0,
+        "hpp": 28000.0,
         "stok": 30
       },
       {
         "nama": "Standar",
-        "harga": 55000,
-        "hpp": 40000,
+        "harga": 55000.0,
+        "hpp": 40000.0,
         "stok": 20
       },
       {
         "nama": "Besar",
-        "harga": 75000,
-        "hpp": 55000,
+        "harga": 75000.0,
+        "hpp": 55000.0,
         "stok": 15
       }
     ]
@@ -319,20 +319,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 15000,
-        "hpp": 10000,
+        "harga": 15000.0,
+        "hpp": 10000.0,
         "stok": 50
       },
       {
         "nama": "Standar",
-        "harga": 25000,
-        "hpp": 18000,
+        "harga": 25000.0,
+        "hpp": 18000.0,
         "stok": 30
       },
       {
         "nama": "Besar",
-        "harga": 35000,
-        "hpp": 25000,
+        "harga": 35000.0,
+        "hpp": 25000.0,
         "stok": 20
       }
     ]
@@ -357,20 +357,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 25000,
-        "hpp": 18000,
+        "harga": 25000.0,
+        "hpp": 18000.0,
         "stok": 40
       },
       {
         "nama": "Standar",
-        "harga": 40000,
-        "hpp": 28000,
+        "harga": 40000.0,
+        "hpp": 28000.0,
         "stok": 25
       },
       {
         "nama": "Besar",
-        "harga": 55000,
-        "hpp": 40000,
+        "harga": 55000.0,
+        "hpp": 40000.0,
         "stok": 15
       }
     ]
@@ -395,20 +395,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 30000,
-        "hpp": 22000,
+        "harga": 30000.0,
+        "hpp": 22000.0,
         "stok": 35
       },
       {
         "nama": "Standar",
-        "harga": 45000,
-        "hpp": 32000,
+        "harga": 45000.0,
+        "hpp": 32000.0,
         "stok": 20
       },
       {
         "nama": "Besar",
-        "harga": 60000,
-        "hpp": 44000,
+        "harga": 60000.0,
+        "hpp": 44000.0,
         "stok": 15
       }
     ]
@@ -433,20 +433,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 50000,
-        "hpp": 36000,
+        "harga": 50000.0,
+        "hpp": 36000.0,
         "stok": 25
       },
       {
         "nama": "Standar",
-        "harga": 70000,
-        "hpp": 50000,
+        "harga": 70000.0,
+        "hpp": 50000.0,
         "stok": 15
       },
       {
         "nama": "Besar",
-        "harga": 95000,
-        "hpp": 70000,
+        "harga": 95000.0,
+        "hpp": 70000.0,
         "stok": 10
       }
     ]
@@ -471,20 +471,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 35000,
-        "hpp": 25000,
+        "harga": 35000.0,
+        "hpp": 25000.0,
         "stok": 30
       },
       {
         "nama": "Standar",
-        "harga": 50000,
-        "hpp": 36000,
+        "harga": 50000.0,
+        "hpp": 36000.0,
         "stok": 20
       },
       {
         "nama": "Besar",
-        "harga": 70000,
-        "hpp": 50000,
+        "harga": 70000.0,
+        "hpp": 50000.0,
         "stok": 15
       }
     ]
@@ -509,20 +509,20 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 60000,
-        "hpp": 44000,
+        "harga": 60000.0,
+        "hpp": 44000.0,
         "stok": 20
       },
       {
         "nama": "Standar",
-        "harga": 85000,
-        "hpp": 62000,
+        "harga": 85000.0,
+        "hpp": 62000.0,
         "stok": 15
       },
       {
         "nama": "Besar",
-        "harga": 110000,
-        "hpp": 80000,
+        "harga": 110000.0,
+        "hpp": 80000.0,
         "stok": 10
       }
     ]
@@ -545,21 +545,44 @@
     "ukuran": [
       {
         "nama": "Mini",
-        "harga": 45000,
-        "hpp": 32000,
+        "harga": 45000.0,
+        "hpp": 32000.0,
         "stok": 25
       },
       {
         "nama": "Standar",
-        "harga": 65000,
-        "hpp": 48000,
+        "harga": 65000.0,
+        "hpp": 48000.0,
         "stok": 15
       },
       {
         "nama": "Besar",
-        "harga": 90000,
-        "hpp": 65000,
+        "harga": 90000.0,
+        "hpp": 65000.0,
         "stok": 10
+      }
+    ]
+  },
+  {
+    "kode": "G2",
+    "nama": "Gantungan Kunci Buqet Mini",
+    "warna_kertas": [
+      "Hitam",
+      "Merah",
+      "Biru",
+      "Pink"
+    ],
+    "warna_bunga": [
+      "Merah",
+      "Pink",
+      "Biru"
+    ],
+    "ukuran": [
+      {
+        "nama": "S",
+        "harga": 7000.0,
+        "hpp": 3000.0,
+        "stok": 12
       }
     ]
   }

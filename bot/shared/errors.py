@@ -214,9 +214,9 @@ def safe_callback(handler_name: str = ""):
             except BadRequest as error:
                 error_str = str(error).lower()
                 
-                # Silent skip untuk expired callback
+                # Silent skip untuk expired callback atau message tidak berubah
                 if "query is too old" in error_str or "message is not modified" in error_str:
-                    log_error(error, f"Callback: {handler_name or func.__name__} (silent)")
+                    # No logging needed - this is expected behavior
                     return
                 
                 # Other BadRequest - log and notify

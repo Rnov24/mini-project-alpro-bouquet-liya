@@ -72,12 +72,10 @@ python bot.py
 python app.py
 ```
 
-## 📝 Alur Logika (Logic Flow)
-Detail alur logika untuk setiap fitur dapat dilihat di file: [`logic_flow.txt`](logic_flow.txt).
-
 ## 👥 Kontributor
-- **Rnov24** - Lead Developer
-- Tim Alpro Bouquet Liya
+- **Rijal** - System Lead
+- **Nihlah Auliya** - Programmer
+- **Raffi Erlangga Dwi Tama** - Programmer
 
 ---
 *Dibuat dengan ❤️ untuk UMKM Indonesia.*

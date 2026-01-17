@@ -10,6 +10,7 @@ from cli.ui.helpers import (
 )
 from cli.ui.colors import Colors
 from cli.ui.inputs import input_styled, input_int, input_yes_no, input_float
+from cli.errors import ErrorMsg, SuccessMsg, InfoMsg
 from core.services.order_service import (
     get_active_orders, get_order_by_id, update_order_status,
     process_order, ready_order, cancel_order,
@@ -50,7 +51,7 @@ def show_order_menu():
         elif choice == "2":
             find_order()
         else:
-            print_error("Pilihan tidak valid.")
+            print_error(ErrorMsg.INVALID_CHOICE)
 
 
 def list_active_orders():
@@ -60,7 +61,7 @@ def list_active_orders():
     
     orders = get_active_orders()
     if not orders:
-        print_info("Tidak ada pesanan aktif.")
+        print_info(ErrorMsg.ORDER_EMPTY)
         input("Tekan Enter...")
         return
         
@@ -94,7 +95,7 @@ def find_order():
     if order:
         detail_order(order_id)
     else:
-        print_error("Order tidak ditemukan.")
+        print_error(ErrorMsg.ORDER_NOT_FOUND.format(order_id=order_id))
         input("Tekan Enter...")
 
 
@@ -104,7 +105,7 @@ def detail_order(order_id: str):
         clear_screen()
         order = get_order_by_id(order_id)
         if not order:
-            print_error("Order data error / dihapus.")
+            print_error(ErrorMsg.ORDER_CORRUPTED)
             break
             
         print_header(f"DETAIL ORDER: {order_id}")
@@ -143,7 +144,7 @@ def detail_order(order_id: str):
             break
             
         if choice not in valid_actions:
-            print_error("Pilihan tidak valid.")
+            print_error(ErrorMsg.INVALID_CHOICE)
             continue
             
         # Execute Action
@@ -154,7 +155,7 @@ def detail_order(order_id: str):
             elif choice == "2":
                 if input_yes_no("Yakin batalkan order?"):
                     cancel_order(order_id)
-                    print_success("Order DIBATALKAN.")
+                    print_success(SuccessMsg.ORDER_CANCELLED)
                     break
                     
         elif status == STATUS_PROCESSING:
@@ -163,7 +164,7 @@ def detail_order(order_id: str):
                 print_success("Status diubah ke READY.")
             elif choice == "2":
                 cancel_order(order_id)
-                print_success("Order DIBATALKAN.")
+                print_success(SuccessMsg.ORDER_CANCELLED)
                 break
                 
         elif status == STATUS_READY:
@@ -172,10 +173,10 @@ def detail_order(order_id: str):
                 print("\nMenyelesaikan pesanan...")
                 trx_id, _ = finalize_order(order_id, generate_invoice=False)
                 if trx_id:
-                    print_success(f"Order SELESAI! Tersimpan di Transaksi ID: {trx_id}")
+                    print_success(SuccessMsg.TRANSACTION_SUCCESS.format(trx_id=trx_id))
                     break
                 else:
-                    print_error("Gagal finalize order.")
+                    print_error(ErrorMsg.ORDER_FINALIZE_FAILED.format(error="Unknown error"))
             elif choice == "2":
                 process_order(order_id) # back to processing
                 print_success("Status kembali ke PROCESSING.")

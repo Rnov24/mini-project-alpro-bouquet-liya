@@ -9,6 +9,7 @@ from cli.ui.helpers import (
 )
 from cli.ui.inputs import input_styled, input_non_empty, input_int, input_float, input_yes_no
 from cli.ui.colors import Colors
+from cli.errors import ErrorMsg, SuccessMsg, InfoMsg
 from core.services.barang_service import (
     load_barang, save_barang, find_by_kode, search_barang
 )
@@ -43,7 +44,7 @@ def show_katalog_menu():
         elif choice == "5":
             delete_barang()
         else:
-            print_error("Pilihan tidak valid.")
+            print_error(ErrorMsg.INVALID_CHOICE_RANGE.format(min_val=0, max_val=5))
             input("Tekan Enter untuk lanjut...")
 
 
@@ -54,7 +55,7 @@ def list_all_barang():
     
     barang_list = load_barang()
     if not barang_list:
-        print_info("Belum ada data barang.")
+        print_info(ErrorMsg.BARANG_EMPTY)
         input("\nTekan Enter untuk kembali...")
         return
 
@@ -88,7 +89,7 @@ def find_barang():
     results = search_barang(barang_list, keyword)
     
     if not results:
-        print_warning(f"Tidak ditemukan barang dengan kata kunci '{keyword}'")
+        print_warning(ErrorMsg.BARANG_SEARCH_EMPTY.format(keyword=keyword))
     else:
         print(f"\nDitemukan {len(results)} barang:")
         for b in results:
@@ -106,7 +107,7 @@ def create_new_barang():
     
     kode = input_non_empty("Kode Barang (unik): ").upper()
     if find_by_kode(barang_list, kode):
-        print_error(f"Barang dengan kode {kode} sudah ada!")
+        print_error(ErrorMsg.BARANG_DUPLICATE.format(kode=kode))
         input("Tekan Enter untuk kembali...")
         return
         
@@ -128,7 +129,7 @@ def create_new_barang():
         nama_ukuran = input_styled("Nama Ukuran: ")
         if nama_ukuran.lower() == "selesai":
             if not ukuran_list:
-                print_error("Minimal harus ada 1 ukuran!")
+                print_error(ErrorMsg.MIN_UKURAN_REQUIRED)
                 continue
             break
             
@@ -142,7 +143,7 @@ def create_new_barang():
             hpp=hpp,
             stok=stok
         ))
-        print_success(f"Varian {nama_ukuran} ditambahkan.")
+        print_success(SuccessMsg.UKURAN_ADDED.format(ukuran=nama_ukuran))
         
         if not input_yes_no("Tambah ukuran lain?"):
             break
@@ -158,7 +159,7 @@ def create_new_barang():
     
     barang_list.append(new_barang)
     save_barang(barang_list)
-    print_success(f"Barang {nama} berhasil disimpan!")
+    print_success(SuccessMsg.BARANG_CREATED.format(nama=nama))
     input("\nTekan Enter untuk kembali...")
 
 
@@ -172,7 +173,7 @@ def update_barang():
     target = find_by_kode(barang_list, kode)
     
     if not target:
-        print_error("Barang tidak ditemukan.")
+        print_error(ErrorMsg.BARANG_NOT_FOUND.format(kode=kode))
         input("Tekan Enter untuk kembali...")
         return
         
@@ -198,7 +199,7 @@ def update_barang():
         varian.harga = input_float(f"Harga baru (saat ini {varian.harga}): ", min_val=0)
         
     save_barang(barang_list)
-    print_success("Data barang berhasil diupdate.")
+    print_success(SuccessMsg.BARANG_UPDATED)
     input("\nTekan Enter untuk kembali...")
 
 
@@ -212,7 +213,7 @@ def delete_barang():
     target = find_by_kode(barang_list, kode)
     
     if not target:
-        print_error("Barang tidak ditemukan.")
+        print_error(ErrorMsg.BARANG_NOT_FOUND.format(kode=kode))
         input("Tekan Enter untuk kembali...")
         return
         
@@ -221,8 +222,8 @@ def delete_barang():
         # Remove from list
         new_list = [b for b in barang_list if b.kode != target.kode]
         save_barang(new_list)
-        print_success("Barang berhasil dihapus.")
+        print_success(SuccessMsg.BARANG_DELETED)
     else:
-        print_info("Penghapusan dibatalkan.")
+        print_info(InfoMsg.DELETE_CANCELLED)
     
     input("\nTekan Enter untuk kembali...")
